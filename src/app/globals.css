@@ -4,13 +4,13 @@
 
 @font-face {
     font-family: 'Righteous Regular';
-    src: url('../fonts/Righteous-Regular.ttf') format('opentype');
+    src: url('../Fonts/Righteous-Regular.ttf') format('opentype');
     font-weight: 400;
     font-style: normal;
   }
 @font-face {
     font-family: 'Quicksand Light';
-    src: url('../fonts/Quicksand-Light.ttf') format('opentype');
+    src: url('../Fonts/Quicksand-Light.ttf') format('opentype');
     font-weight: 300;
     font-style: normal;
   }
