@@ -50,3 +50,21 @@
     font-weight: 400;
     font-style: normal;
   }
+@font-face {
+    font-family: 'ReemKufiFun Medium';
+    src: url('../Fonts/ReemKufiFun-Medium.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'ReemKufiFun Regular';
+    src: url('../Fonts/ReemKufiFun-Regular.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'ReemKufiFun SemiBold';
+    src: url('../Fonts/ReemKufiFun-SemiBold.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }

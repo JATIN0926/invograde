@@ -21,6 +21,9 @@ module.exports = {
         "IBMPlexSans-Light": ["IBMPlexSans Light", "sans-serif"],
         "IBMPlexSans-Medium": ["IBMPlexSans Medium", "sans-serif"],
         "IBMPlexSans-SemiBold": ["IBMPlexSans SemiBold", "sans-serif"],
+        "ReemKufiFun-Medium": ["ReemKufiFun Medium", "sans-serif"],
+        "ReemKufiFun-Regular": ["ReemKufiFun Regular", "sans-serif"],
+        "ReemKufiFun-SemiBold": ["ReemKufiFun SemiBold", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",
