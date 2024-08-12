@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./style.css";
 
 const Navbar = () => {
@@ -11,7 +12,7 @@ const Navbar = () => {
         <h3 className="nav-link relative">Explore</h3>
         <h3 className="nav-link relative">About Us</h3>
         <h3 className="nav-link relative">Contact</h3>
-        <h3 className="nav-link relative">Sign In</h3>
+        <Link href="/login"><h3 className="nav-link relative">Sign In</h3></Link> 
       </div>
     </div>
   );
