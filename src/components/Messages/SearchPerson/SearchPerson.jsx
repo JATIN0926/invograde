@@ -4,7 +4,7 @@ import Profile from '../Profile/Profile'
 
 const SearchPerson = () => {
   return (
-    <div className='w-full flex items-center justify-between'>
+    <div className='w-full flex items-center justify-between py-5'>
         <div className="flex items-center justify-center gap-4 w-[60%]">
             <div className="w-[5.5rem] aspect-square relative">
             <Image src="/images/ProfileAvatar.png" alt='avatar' fill  />

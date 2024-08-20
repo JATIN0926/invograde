@@ -4,7 +4,7 @@ import CustomToggleSwitch from './Switch'
 const SideBar = () => {
   return (
     
-    <div className={`w-[18%] max-h-[100vh] h-[95vh]   fixed left-0 top-[162px]   bottom-0  border-r-[0.5px] border-r-[#000000] font-IBMPlexSans-SemiBold z-30 pt-4`}>
+    <div className={`w-[18%] max-h-[100vh] h-[95vh]   fixed left-0 top-[200px]   bottom-0  border-r-[0.5px] border-r-[#000000] font-IBMPlexSans-SemiBold z-30 pt-4`}>
       <div className="h-full w-full flex flex-col gap-2">
         <div className=" w-full h-[5%] flex flex-row items-center justify-center gap-3 ">
           <h1>Learner</h1>
@@ -38,7 +38,7 @@ const SideBar = () => {
 
 
    </div>
-   <div className=' bg-[white] rounded-md p-4 px-6 text-[#3A3084] flex flex-col items-start justify-start w-[82%] gap-2'>
+   <div className=' bg-[white] rounded-md p-4 px-6 text-[#3A3084] flex flex-col items-start justify-start w-[82%] gap-2 font-IBMPlexSans-Bold'>
    <h1>Badges</h1>
    <h1>Networks</h1>
    <h1>Accomplishment</h1>

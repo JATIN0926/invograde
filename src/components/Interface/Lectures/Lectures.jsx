@@ -29,7 +29,7 @@ import CourseCard from './CourseCard'
 
 const Lectures = () => {
   return (
-    <div className="flex-grow mt-[162px] ml-[18%] px-10 py-7 overflow-y-auto">
+    <div className="flex-grow mt-[200px] ml-[18%] px-10 py-7 overflow-y-auto">
       <div className="w-full flex flex-col items-center justify-center gap-4">
         <h1 className='font-IBMPlexSans-Regular text-2xl text-[#454545] self-start'>Earn a free Certificate</h1>
         <div className="flex items-center justify-between w-full flex-wrap gap-y-8">
