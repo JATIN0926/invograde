@@ -11,7 +11,7 @@ const Navbar = ({isMessagesPage}) => {
   const navItems = [
     { src: "/icons/favorites.svg", activeSrc: "/icons/favorites_click.svg", text: "Favorites", href:"/favorites" },
     { src: "/icons/shorts.svg", activeSrc: "/icons/shorts_click.svg", text: "Shorts", href:"/shorts" },
-    { src: "/icons/msgs.svg", activeSrc: "/icons/msgs_click.svg", text: "Messages", href:"/messages" },
+    { src: "/icons/msgs.svg", activeSrc: "/icons/msgs_click.svg", text: "Messages", },
     { src: "/icons/yourWork.svg", activeSrc: "/icons/yourWork_click.svg", text: "Your work", href:"/yourwork" },
     { src: "/icons/notifications.svg", activeSrc: "/icons/notifications_click.svg", text: "Notifications", href:"/notifications" },
     { src: "/icons/acheive.svg", activeSrc: "/icons/acheive_click.svg", text: "Achieve", href:"/acheive" },
