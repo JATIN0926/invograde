@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/models/*": ["models/*"],
-      "@/dbConfig/*": ["dbConfig/*"]
+    //   "@/models/*": ["models/*"],
+    //   "@/dbConfig/*": ["dbConfig/*"],
+    "@/components/*": ["components/*"]
     },
     "lib": [
       "dom",
