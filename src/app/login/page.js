@@ -1,204 +1,9 @@
-// "use client";
-// import Image from "next/image";
-// import { useState } from "react";
-
-// const Login = () => {
-//   const [next, setnext] = useState(false);
-//   const imgs = [
-//     "/icons/google.png",
-//     "/icons/twitter.png",
-//     "/icons/facebook.png",
-//     "/icons/linkedin.png",
-//   ];
-//   return (
-//     <div className="bg-login-bg bg-cover bg-center h-screen -z-10 w-screen max-w-full flex items-center justify-center ">
-//       <div className="flex items-center justify-center h-[89vh] w-[80vw]">
-//         <div className="w-1/2 p-6 text-[#787878] bg-white flex flex-col items-center justify-center gap-6">
-//           {next ? (
-//             <>
-//               <div className="flex w-full flex-col items-center justify-center gap-2 relative">
-//                 <h1>Create a username</h1>
-//                 <input
-//                   type="email"
-//                   name=""
-//                   id=""
-//                   className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                 />
-//                 <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
-//                   <Image
-//                     src="/icons/india.png"
-//                     alt="img"
-//                     width={30}
-//                     height={30}
-//                   />
-//                   <Image
-//                     src="/icons/Arrow.png"
-//                     alt="img"
-//                     width={10}
-//                     height={10}
-//                   />
-//                 </div>
-//               </div>
-//               <div className="w-full flex flex-col items-center justify-center gap-2">
-//                 <h1>Choose your career to Get Started !</h1>
-//                 <select
-//                   name="cars"
-//                   id="cars"
-//                   className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                 >
-//                   <option
-//                     value="volvo"
-//                     className="w-[65%]  p-3 bg-white border-2 hover:bg-[#094480] cursor-pointer border-[#787878]"
-//                   >
-//                     Designer
-//                   </option>
-//                   <option
-//                     value="saab"
-//                     className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                   >
-//                     Developer
-//                   </option>
-//                 </select>
-//                 {/* <input
-//                   type="text"
-//                   name=""
-//                   id=""
-//                   className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                 /> */}
-//                 <p className="w-[65%] text-center text-sm">
-//                   By Registering you confirm that you accept the{" "}
-//                   <span className="text-[#3C7EA4]"> Terms of Service </span>
-//                   and the <span className="text-[#3C7EA4]">Privacy Policy</span>
-//                 </p>
-//               </div>
-//             </>
-//           ) : (
-//             <>
-//               <div className="flex w-full flex-col items-center justify-center gap-2 relative">
-//                 <h1>Email or Phone Number</h1>
-//                 <input
-//                   type="email"
-//                   name=""
-//                   id=""
-//                   className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                 />
-//                 <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
-//                   <Image
-//                     src="/icons/india.png"
-//                     alt="img"
-//                     width={30}
-//                     height={30}
-//                   />
-//                   <Image
-//                     src="/icons/Arrow.png"
-//                     alt="img"
-//                     width={10}
-//                     height={10}
-//                   />
-//                 </div>
-//               </div>
-//               <div className="w-full flex flex-col items-center justify-center gap-2">
-//                 <h1>Create Password</h1>
-//                 <input
-//                   type="text"
-//                   name=""
-//                   id=""
-//                   className="w-[65%]  p-3 bg-white border-2 border-[#787878]"
-//                 />
-//                 <p className="w-[65%] text-center text-sm">
-//                   By Registering you confirm that you accept the{" "}
-//                   <span className="text-[#3C7EA4]"> Terms of Service </span>
-//                   and the <span className="text-[#3C7EA4]">Privacy Policy</span>
-//                 </p>
-//               </div>
-//             </>
-//           )}
-
-//           <div className="flex items-center justify-center gap-2">
-//             <input type="checkbox" name="" id="" className="h-6 w-6" />
-//             <p className="text-[0.9rem]">
-//               I want to receive updates on my registered contact number
-//             </p>
-//           </div>
-//           <div className="flex flex-col items-center justify-center gap-3">
-//             <button
-//               className="bg-[#06264F] p-3 px-14 text-lg rounded-md text-white font-semibold"
-//               type="submit"
-//               onClick={() => {
-//                 setnext(true);
-//               }}
-//             >
-//               {next ? "Get Started" : "Confirm"}
-//             </button>
-//             <p>Login using a social account</p>
-//             <div className="flex items-center justify-between w-full cursor-pointer">
-//               {imgs.map((img, i) => (
-//                 <Image key={i} src={img} alt="img" width={30} height={30} />
-//               ))}
-//             </div>
-//           </div>
-//           <button
-//             className="p-3 px-16 text-base font-normal rounded-full border-[1px] border-black"
-//             type="submit"
-//           >
-//             Already a User ? <span className="font-bold">Sign In</span>
-//           </button>
-//         </div>
-//         <div className="w-1/2 relative h-full">
-//           <Image src="/images/invograde.png" fill alt="invograde" />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
 "use client";
 import Image from "next/image";
 import { useState } from "react";
 
-const CustomSelect = ({ options, selected, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOptionClick = (option) => {
-    onChange(option);
-    setIsOpen(false);
-  };
-
-  return (
-    <div className="relative w-[65%]">
-      <div
-        className="p-3 bg-white border-2 border-[#787878] cursor-pointer text-[#787878]"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        I am a{" "}
-        <span className="text-[#094480] font-semibold">
-          {selected || "..."}
-        </span>
-      </div>
-      {isOpen && (
-        <div className="absolute w-full bg-white border-2 border-[#787878] mt-1 z-10">
-          {options.map((option, index) => (
-            <div
-              key={index}
-              className="p-3 hover:bg-[#094480] cursor-pointer"
-              onClick={() => handleOptionClick(option)}
-            >
-              <span className="text-[#094480] group-hover:text-white">
-                {option}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
 const Login = () => {
-  const [next, setNext] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const imgs = [
     "/icons/google.png",
     "/icons/twitter.png",
@@ -208,120 +13,98 @@ const Login = () => {
 
   return (
     <div className="bg-login-bg bg-cover bg-center h-screen -z-10 w-screen max-w-full flex items-center justify-center">
-      <div className="flex items-center justify-center h-[89vh] w-[80vw]">
+      <div className=" shadow-[#535353] rounded-l-xl shadow-md flex items-center justify-center h-[89vh] w-[80vw]">
         <div className="w-1/2 p-6 text-[#787878] bg-white flex flex-col items-center justify-center gap-6">
-          {next ? (
-            <>
-              <div className="flex w-full flex-col items-center justify-center gap-2 relative">
-                <h1>Create a username</h1>
-                <input
-                  type="email"
-                  name=""
-                  id=""
-                  className="w-[65%] p-3 bg-white border-2 border-[#787878]"
-                />
-                <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
-                  <Image
-                    src="/icons/india.png"
-                    alt="img"
-                    width={30}
-                    height={30}
-                  />
-                  <Image
-                    src="/icons/Arrow.png"
-                    alt="img"
-                    width={10}
-                    height={10}
-                  />
-                </div>
-              </div>
-              <div className="w-full flex flex-col items-center justify-center gap-2">
-                <h1>Choose your career to Get Started !</h1>
-                <CustomSelect
-                  options={["Designer", "Developer"]}
-                  selected={selectedOption}
-                  onChange={setSelectedOption}
-                />
-                <p className="w-[65%] text-center text-sm">
-                  By Registering you confirm that you accept the{" "}
-                  <span className="text-[#3C7EA4]">Terms of Service</span> and
-                  the <span className="text-[#3C7EA4]">Privacy Policy</span>
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex w-full flex-col items-center justify-center gap-2 relative">
-                <h1>Email or Phone Number</h1>
-                <input
-                  type="email"
-                  name=""
-                  id=""
-                  className="w-[65%] p-3 bg-white border-2 border-[#787878]"
-                />
-                <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
-                  <Image
-                    src="/icons/india.png"
-                    alt="img"
-                    width={30}
-                    height={30}
-                  />
-                  <Image
-                    src="/icons/Arrow.png"
-                    alt="img"
-                    width={10}
-                    height={10}
-                  />
-                </div>
-              </div>
-              <div className="w-full flex flex-col items-center justify-center gap-2">
-                <h1>Create Password</h1>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  className="w-[65%] p-3 bg-white border-2 border-[#787878]"
-                />
-                <p className="w-[65%] text-center text-sm">
-                  By Registering you confirm that you accept the{" "}
-                  <span className="text-[#3C7EA4]">Terms of Service</span> and
-                  the <span className="text-[#3C7EA4]">Privacy Policy</span>
-                </p>
-              </div>
-            </>
-          )}
-
-          <div className="flex items-center justify-center gap-2">
-            <input type="checkbox" name="" id="" className="h-6 w-6" />
-            <p className="text-[0.9rem]">
-              I want to receive updates on my registered contact number
-            </p>
+          <div className=" flex w-full flex-col items-center justify-center gap-2 relative">
+            <div className="w-[65%] flex flex-col items-start justify-center gap-1.5">
+              <h1 className="text-[#141520] font-bold">
+                Email or Phone Number
+              </h1>
+              <input
+                type="email"
+                name=""
+                id=""
+                className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
+              />
+            </div>
+            <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
+              <Image src="/icons/india.png" alt="img" width={30} height={30} />
+              <Image src="/icons/Arrow.png" alt="img" width={10} height={10} />
+            </div>
           </div>
+          <div className="w-full flex flex-col items-center justify-center gap-2">
+            <div className="w-[65%] flex flex-col items-start justify-center gap-1.5 relative">
+              <h1 className="text-[#141520] font-bold self-start w-[65%]">
+                Password
+              </h1>
+              <input
+                type={passwordVisible ? "text" : "password"}
+                name=""
+                id=""
+                className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] rounded-md text-[0.9rem]"
+              />
+              <div
+                className="absolute bottom-[38%] right-[5%] text-[#787878] text-[0.9rem] cursor-pointer"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? "Hide" : "Show"}
+              </div>
+              <p className="text-[#005DA6] text-[0.9rem] text-start hover:underline cursor-pointer">
+                Forgot Password?
+              </p>
+            </div>
+            <p>or</p>
+          </div>
+
           <div className="flex flex-col items-center justify-center gap-3">
-            <button
-              className="bg-[#06264F] p-3 px-14 text-lg rounded-md text-white font-semibold"
-              type="submit"
-              onClick={() => {
-                setNext(true);
-              }}
-            >
-              {next ? "Get Started" : "Confirm"}
-            </button>
-            <p>Login using a social account</p>
+            <p className=" text-[#787878] text-[0.82rem]">
+              Login using a social account
+            </p>
             <div className="flex items-center justify-between w-full cursor-pointer">
               {imgs.map((img, i) => (
                 <Image key={i} src={img} alt="img" width={30} height={30} />
               ))}
             </div>
+            <div className="flex items-center justify-center gap-2">
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="h-5 w-5 border-[#CFCFCF] border-[1.5px]"
+              />
+              <p className="text-[0.78rem] text-[#787878]">Keep me logged in</p>
+            </div>
+            <button
+              className="bg-[#3A3084] p-2 px-8 text-base rounded-md text-white font-semibold"
+              type="submit"
+            >
+              Login
+            </button>
           </div>
+
           <button
-            className="p-3 px-16 text-base font-normal rounded-full border-[1px] border-black"
+            className="p-2.5 px-12 text-base font-normal rounded-full border-[1px] border-black text-[#787878]"
             type="submit"
           >
-            Already a User? <span className="font-bold">Sign In</span>
+            Don’t have an account? <span className="font-bold">Register</span>
           </button>
         </div>
         <div className="w-1/2 relative h-full">
+          <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full">
+            <div className="flex flex-col items-center justify-center gap-4 text-white w-full px-6">
+              <h2 className="text-3xl font-ReemKufiFun-Regular font-light drop-shadow-md drop-shadow-black">
+                Welcome to
+              </h2>
+              <h1 className="text-7xl font-ReemKufiFun-Medium drop-shadow-2xl drop-shadow-black">
+                Invograde
+              </h1>
+
+              <p className="text-[1.13rem] text-center">
+                Connect, inspire, and collaborate with fellow creatives and
+                professionals across various industries.
+              </p>
+            </div>
+          </div>
           <Image src="/images/invograde.png" fill alt="invograde" />
         </div>
       </div>

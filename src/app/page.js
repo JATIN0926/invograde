@@ -1,19 +1,24 @@
-import ContactUs from "@/components/ContactUs/ContactUs";
-import Description from "@/components/Description/Description";
-import Footer from "@/components/Footer/Footer";
-import Hero from "@/components/Hero/Hero";
-import Working from "@/components/Working/Working";
+import ContactUs from "@/components/HomePage/ContactUs/ContactUs";
+import Description from "@/components/HomePage/Description/Description";
+import Footer from "@/components/HomePage/Footer/Footer";
+import Hero from "@/components/HomePage/Hero/Hero";
+import Navbar from "@/components/HomePage/Navbar/Navbar";
+import WhoIsThisFor from "@/components/HomePage/WhoIsThisFor/WhoIsThisFor";
+import Working from "@/components/HomePage/Working/Working";
 
 export default function Home() {
   return (
     <>
-      <main className="w-screen max-w-full flex flex-col gap-6 px-6 bg-[#060032]">
+      <main className="w-screen max-w-full flex flex-col gap-6">
+   
+        <Navbar />
         <Hero />
-        <Description />
         <Working />
+        <Description />
+        <WhoIsThisFor />
         <ContactUs />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

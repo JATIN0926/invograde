@@ -1,20 +1,33 @@
+const flowbite = require("flowbite-react/tailwind");
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const flattenColorPalette = require("tailwindcss/lib/util/flattenColorPalette").default;
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    flowbite.content(),
   ],
   theme: {
     extend: {
       fontFamily: {
         "Righteous-Regular": ["Righteous Regular", "sans-serif"],
         "Quicksand-Light": ["Quicksand Light", "sans-serif"],
+        "Snippet-Regular": ["Snippet Regular", "sans-serif"],
+        "IBMPlexSans-Bold": ["IBMPlexSans Bold", "sans-serif"],
+        "IBMPlexSans-Regular": ["IBMPlexSans Regular", "sans-serif"],
+        "IBMPlexSans-Light": ["IBMPlexSans Light", "sans-serif"],
+        "IBMPlexSans-Medium": ["IBMPlexSans Medium", "sans-serif"],
+        "IBMPlexSans-SemiBold": ["IBMPlexSans SemiBold", "sans-serif"],
+        "ReemKufiFun-Medium": ["ReemKufiFun Medium", "sans-serif"],
+        "ReemKufiFun-Regular": ["ReemKufiFun Regular", "sans-serif"],
+        "ReemKufiFun-SemiBold": ["ReemKufiFun SemiBold", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",
         "footer-texture": "url('/img/footer-texture.png')",
-        "homePage-bg": "url('/images/homePage_bg.png')",
       },
       screens: {
         mbMini: "290px",
@@ -30,7 +43,31 @@ module.exports = {
         Desktop: "2000px",
         lgDesktop: "2400px",
       },
+      animation: {
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+      },
+      keyframes: {
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    addVariablesForColors,
+    flowbite.plugin(),
+  ],
 };
+function addVariablesForColors({ addBase, theme }) {
+  const allColors = flattenColorPalette(theme("colors"));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}

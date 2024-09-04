@@ -14,3 +14,61 @@
     font-weight: 300;
     font-style: normal;
   }
+@font-face {
+    font-family: 'Snippet Regular';
+    src: url('../Fonts/Snippet-Regular.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'IBMPlexSans Bold';
+    src: url('../Fonts/IBMPlexSans-Bold.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'IBMPlexSans Regular';
+    src: url('../Fonts/IBMPlexSans-Regular.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'IBMPlexSans Light';
+    src: url('../Fonts/IBMPlexSans-Light.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'IBMPlexSans Medium';
+    src: url('../Fonts/IBMPlexSans-Medium.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'IBMPlexSans SemiBold';
+    src: url('../Fonts/IBMPlexSans-SemiBold.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'ReemKufiFun Medium';
+    src: url('../Fonts/ReemKufiFun-Medium.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'ReemKufiFun Regular';
+    src: url('../Fonts/ReemKufiFun-Regular.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'ReemKufiFun SemiBold';
+    src: url('../Fonts/ReemKufiFun-SemiBold.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  ::-webkit-scrollbar{
+    display: none;
+  }
