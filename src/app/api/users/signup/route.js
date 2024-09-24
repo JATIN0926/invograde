@@ -7,7 +7,7 @@ connect();
 
 export async function POST(req) {
     try {
-        const { name, username, email, password, bio, profile_title } = await req.json();
+        const { name, username, email, password, bio, profile_title, profilePicture } = await req.json();
 
         // to check if the user already exists
         const user = await User.findOne({email});
@@ -25,7 +25,8 @@ export async function POST(req) {
             email,
             password_hash: hashedPassword,
             bio,
-            profile_title
+            profile_title,
+            profilePicture
         });
         const savedUser = await newUser.save();
 

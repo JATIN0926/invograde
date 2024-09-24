@@ -3,6 +3,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import FileBase from "react-file-base64";
+
 const RegisterTest = () => {
 
     const [userData, setUserData] = useState({
@@ -10,12 +12,13 @@ const RegisterTest = () => {
         username: "",
         email: "",
         password: "",
-        // profilePicture: "",
+        profilePicture: "",
         bio: "",
         profile_title: "",
     });
 
     const handleSubmit = async (e) => {
+        console.log(userData);
         e.preventDefault();
         try {
           const response = await axios.post("/api/users/signup", userData);
@@ -63,13 +66,20 @@ const RegisterTest = () => {
         />
         {/* <input
           type="text"
-          placeholder="Profile Picture URL"
+          placeholder="Profile Picture"
           className="text-2xl border rounded-xl px-3 py-2"
           value={userData.profilePicture}
           onChange={(e) =>
             setUserData({ ...userData, profilePicture: e.target.value })
           }
         /> */}
+        <FileBase
+            type="file"
+            multiple={false}
+            onDone={({ base64 }) =>
+              setUserData({ ...userData, profilePicture: base64 })
+            }
+          ></FileBase>
         <input
           type="text"
           placeholder="Bio"
