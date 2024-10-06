@@ -2,6 +2,8 @@ import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import { sendEmail } from "@/helpers/emailSender";
+import otpGenerator from "otp-generator";
 
 connect();
 
@@ -19,18 +21,28 @@ export async function POST(req) {
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, salt);
 
+        // generate otp
+        const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+
         const newUser = await User.create({
-            name,
-            username,
-            email,
+            name: name.toLowerCase(),
+            username: username.toLowerCase(),
+            email: email,
             password_hash: hashedPassword,
-            bio,
-            profile_title,
-            profilePicture
+            bio: bio.toLowerCase(),
+            profile_title: profile_title.toLowerCase(),
+            profilePicture: profilePicture.toLowerCase(),
+            verifyToken: otp,
+            verifyTokenExpiry: Date.now() + 3600000
         });
         const savedUser = await newUser.save();
 
-        // to add send verification email
+        // send verification email
+        sendEmail({
+            to: email,
+            subject: "Verify your email",
+            text: ` <b>${otp}</b> is your otp for verification to InvoGrade!`
+        });
 
         return NextResponse.json({
             message: "User created successfully!",
