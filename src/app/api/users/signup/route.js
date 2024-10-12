@@ -9,7 +9,7 @@ connect();
 
 export async function POST(req) {
     try {
-        const { name, username, email, password, bio, profile_title, profilePicture } = await req.json();
+        const { name, username, email, password, bio, profile_title, profilePicture, receiveUpdates } = await req.json();
 
         // to check if the user already exists
         const user = await User.findOne({email});
@@ -33,7 +33,8 @@ export async function POST(req) {
             profile_title: profile_title.toLowerCase(),
             profilePicture: profilePicture.toLowerCase(),
             verifyToken: otp,
-            verifyTokenExpiry: Date.now() + 3600000
+            verifyTokenExpiry: Date.now() + 3600000,
+            receiveUpdates
         });
         const savedUser = await newUser.save();
 

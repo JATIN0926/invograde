@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    receiveUpdates: Boolean,
     isAdmin: {
         type: Boolean,
         default: false,

@@ -15,6 +15,7 @@ const RegisterTest = () => {
         profilePicture: "",
         bio: "",
         profile_title: "",
+        receiveUpdates: false,
     });
 
     const handleSubmit = async (e) => {
@@ -96,6 +97,10 @@ const RegisterTest = () => {
             setUserData({ ...userData, profile_title: e.target.value })
           }
         />
+        <p>
+          <input type="checkbox" onClick={e => setUserData({...userData, receiveUpdates: e.target.checked})} />{" "}
+          I want to receive updates on my registered contact number.
+        </p>
         <button className="text-2xl font-bold border-2 border-black text-white hover:text-black bg-black hover:bg-white rounded-xl p-3" onClick={handleSubmit}>
           Register User
         </button>
