@@ -57,7 +57,7 @@ const WhoIsThisFor = () => {
               Who is this for ?
             </h1>
             <div className="flex flex-col items-start justify-center w-[55%]">
-              <p className="text-[#787878] font-IBMPlexSans-Light">
+              <p className="text-[#787878] font-IBMPlexSans-Regular">
                 Our goal is to bridge the gap between learners and trainers, the
                 project aims to foster a community of growth, collaboration, and
                 professional development.
