@@ -3,7 +3,8 @@ import React from "react";
 
 const CourseCard = () => {
   return (
-    <div className="w-[30%] flex flex-col items-center justify-center gap-2 border-[3px] border-[#774FCC] rounded-xl shadow-lg shadow-[#774FCC] overflow-hidden">
+    // <div className="w-[30%] flex flex-col items-center justify-center gap-2 outline-none hover:outline-[3px] hover:outline-[#774FCC] border-none transition-all rounded-xl shadow-lg shadow-[#774FCC] overflow-hidden cursor-pointer">
+    <div className="w-[30%] flex flex-col items-center justify-center gap-2 border-[1px] border-transparent hover:border-[#774FCC] hover:shadow-[0_0_0_3px_#774FCC] transition-all rounded-xl shadow-lg shadow-[#774FCC] overflow-hidden cursor-pointer">
       <div className="w-full max-h-[12rem] h-[11rem] flex items-center justify-center bg-gray-800"></div>
       <div className=" flex flex-col items-center justify-center gap-6 px-5 py-2.5 ">
         <div className="w-full flex flex-col justify-center items-center">

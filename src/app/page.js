@@ -1,6 +1,6 @@
 import ContactUs from "@/components/HomePage/ContactUs/ContactUs";
 import Description from "@/components/HomePage/Description/Description";
-import Footer from "@/components/HomePage/Footer/Footer";
+import GettingStarted from "@/components/HomePage/GettingStarted/GettingStarted";
 import Hero from "@/components/HomePage/Hero/Hero";
 import Navbar from "@/components/HomePage/Navbar/Navbar";
 import WhoIsThisFor from "@/components/HomePage/WhoIsThisFor/WhoIsThisFor";
@@ -16,9 +16,9 @@ export default function Home() {
         <Working />
         <Description />
         <WhoIsThisFor />
+        <GettingStarted />
         <ContactUs />
       </main>
-      {/* <Footer /> */}
     </>
   );
 }
