@@ -11,6 +11,7 @@ const LoginTest = () => {
         password: ""
     });
     const [user, setUser] = useState({profilePicture: ""});
+    const [profilePic, setProfilePic] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -19,11 +20,13 @@ const LoginTest = () => {
           const response = await axios.post("/api/users/login", loginData);
           setUser(response.data.data);
           console.log(response.data.data);
+          await axios.post("/api/users/getProfilePicture", {email: loginData.email})
+          .then(res => setProfilePic(res.data.profilePicture.data))
+          .catch(error => console.log(error));
         } catch (error) {
           console.error(error);
         }
     }
-    console.log(user.profilePicture)
     return (
         <div className="w-full h-screen flex flex-col items-center justify-center">
             <form className="w-3/4 flex flex-col gap-5 border-2 border-black rounded-xl p-10">
@@ -49,7 +52,7 @@ const LoginTest = () => {
             </form>
 
             <div className="">
-                    <img src={user.profilePicture} alt="" />
+                    <img src={profilePic} alt="" />
             </div>
         </div>
     )

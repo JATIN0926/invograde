@@ -24,13 +24,17 @@ export async function POST(req) {
         if (!validPassword)
             return NextResponse.json({message: "invalid password!"}, {status: 400});
         console.log(validPassword);
+
+        console.log(user);
         
 
         // create token data
         const tokenData = {
             id: user._id,
             username: user.username,
-            email: user.email
+            name: user.name,
+            email: user.email,
+            // profilePicture: user.profilePicture
         };
 
         // create token

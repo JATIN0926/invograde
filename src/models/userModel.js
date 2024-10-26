@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now,
     },
     profilePicture: {
-        type: String,
+        type: Buffer,
     },
     bio: {
         type: String,

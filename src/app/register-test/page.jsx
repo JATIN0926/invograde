@@ -12,10 +12,10 @@ const RegisterTest = () => {
         username: "",
         email: "",
         password: "",
-        profilePicture: "",
         bio: "",
         profile_title: "",
         receiveUpdates: false,
+        profilePicture: "",
     });
 
     const handleSubmit = async (e) => {

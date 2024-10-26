@@ -1,5 +1,6 @@
 import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
+import Image from "@/models/imageModel";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/emailSender";
@@ -31,12 +32,18 @@ export async function POST(req) {
             password_hash: hashedPassword,
             bio: bio.toLowerCase(),
             profile_title: profile_title.toLowerCase(),
-            profilePicture: profilePicture.toLowerCase(),
             verifyToken: otp,
             verifyTokenExpiry: Date.now() + 3600000,
             receiveUpdates
         });
         const savedUser = await newUser.save();
+
+        const newProfileImage = await Image.create({
+            name: "Profile Picture",
+            data: profilePicture,
+            email
+        });
+        await newProfileImage.save();
 
         // send verification email
         sendEmail({
