@@ -2,7 +2,7 @@ import React from 'react'
 
 const Sidebar = () => {
   return (
-    <div className=' w-[5%] bg-green-700'></div>
+    <div className=' w-[5%] bg-white'></div>
   )
 }
 

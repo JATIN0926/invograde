@@ -7,7 +7,7 @@ const page = () => {
   return (
     <div className='w-screen max-w-full flex flex-col '>
       <Navbar />
-      <div className=" w-full bg-red-900 flex">
+      <div className=" w-full  flex">
           <SideBar />
           <ProjectsArea />
       </div>
