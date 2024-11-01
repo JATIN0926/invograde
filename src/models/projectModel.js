@@ -9,13 +9,7 @@ const projectSchema = new mongoose.Schema({
   images: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "projectImages.files",
-    },
-  ],
-  videos: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "projectVideos.files",
+      ref: "images",
     },
   ],
   title: {
@@ -26,9 +20,17 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a description"],
   },
-  skills_Used: {
+  skills_used: {
     type: [String],
     required: [true, "Please provide skills used"],
+  },
+  domain: {   // design or dev
+    type: String,
+    enum: ["design", "dev"],
+    required: [true, "Providing a domain is important"],
+  },
+  tags: {
+    type: [String],
   },
   project_link: {
     type: String,
