@@ -9,24 +9,17 @@ connect();
 export async function POST(req) {
     try {
         const { email, password } = await req.json();
-        console.log("\n\n\n", email, password);
 
         // to check if the user dosen't exists
         const user = await User.findOne({email});
         if (!user)
             return NextResponse.json({error: "User does not exist!"}, {status: 404});
-        console.log(user);
         
         // check password
         const validPassword = await bcryptjs.compare(password, user.password_hash);
-        console.log("here");
         
         if (!validPassword)
             return NextResponse.json({message: "invalid password!"}, {status: 400});
-        console.log(validPassword);
-
-        console.log(user);
-        
 
         // create token data
         const tokenData = {
@@ -34,7 +27,6 @@ export async function POST(req) {
             username: user.username,
             name: user.name,
             email: user.email,
-            // profilePicture: user.profilePicture
         };
 
         // create token
@@ -43,7 +35,6 @@ export async function POST(req) {
         const response = NextResponse.json({
             message: "Login Successful",
             success: true,
-            data: user
         });
 
         response.cookies.set("token", token, {httpOnly: true});

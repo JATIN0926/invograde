@@ -36,7 +36,7 @@ export async function POST(req) {
             verifyTokenExpiry: Date.now() + 3600000,
             receiveUpdates
         });
-        const savedUser = await newUser.save();
+        await newUser.save();
 
         const newProfileImage = await Image.create({
             name: "Profile Picture",
@@ -55,7 +55,6 @@ export async function POST(req) {
         return NextResponse.json({
             message: "User created successfully!",
             success: true,
-            savedUser
         });
     } catch (error) {
         return NextResponse.json(`An error occurred while signing up: ${error}`, { status: 500 });
