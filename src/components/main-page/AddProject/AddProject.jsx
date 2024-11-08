@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import TitleSection from './TitleSection'; 
+import SkillsSection from './SkillsSection';
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -137,47 +139,21 @@ const AddProject = () => {
                 </p>
               </div>
             )}
-            {currentStep === "title" && (
-              <div className="bg-white p-6 rounded-lg w-[20%] flex flex-col items-center absolute z-20 inset-0">
-                <h2 className="text-lg font-PublicSans-Medium mb-4">
-                  Give it a Title
-                </h2>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder="Project Title"
-                  className="border-2 p-2 w-full rounded"
-                />
-                <button
-                  onClick={handleNext}
-                  className="bg-[#5446BC] text-white p-2 mt-4 rounded"
-                >
-                  Next
-                </button>
-              </div>
-            )}
+   {currentStep === "title" && (
+  <TitleSection
+    title={title}
+    onTitleChange={handleTitleChange}
+    onNext={handleNext}
+  />
+)}
 
-            {currentStep === "skills" && (
-              <div className="bg-white p-6 rounded-lg w-[20rem] flex flex-col items-center">
-                <h2 className="text-lg font-PublicSans-Medium mb-4">
-                  Skills Used
-                </h2>
-                <input
-                  type="text"
-                  value={skills.join(", ")}
-                  onChange={handleSkillsChange}
-                  placeholder="Enter skills, comma-separated"
-                  className="border-2 p-2 w-full rounded"
-                />
-                <button
-                  onClick={handleNext}
-                  className="bg-[#5446BC] text-white p-2 mt-4 rounded"
-                >
-                  Next
-                </button>
-              </div>
-            )}
+{currentStep === "skills" && (
+  <SkillsSection
+    skills={skills}
+    onSkillsChange={handleSkillsChange}
+    onNext={handleNext}
+  />
+)}
 
             {currentStep === "domain" && (
               <div className="bg-white p-6 rounded-lg w-[60%] flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-[#3A3084]">
