@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import TitleSection from './TitleSection'; 
-import SkillsSection from './SkillsSection';
+import TitleSection from "./TitleSection";
+import SkillsSection from "./SkillsSection";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,8 +30,8 @@ const AddProject = () => {
       dispatch(setImage(base64)); // Save the base64 string to Redux
       setPreviewUrl(base64); // Set preview URL locally for immediate feedback
 
-      console.log("image",image)
-      console.log("previewUrl",previewUrl)
+      console.log("image", image);
+      console.log("previewUrl", previewUrl);
     } else {
       dispatch(setImage(null));
       setPreviewUrl("");
@@ -74,6 +74,10 @@ const AddProject = () => {
   const handleDomainChange = (e) => {
     dispatch(setDomain(e.target.value));
   };
+
+  const handleClose = () => {
+    dispatch(setCurrentStep(null)); // or set to "" based on your logic
+  };
   return (
     <div className="flex flex-col items-start justify-start flex-grow py-12 px-10 pl-16 overflow-y-auto relative">
       {/* File Upload Input */}
@@ -108,14 +112,32 @@ const AddProject = () => {
             className={` relative w-full h-[25rem] border-2 border-[#774FCC] hover:shadow-lg hover:shadow-[#774FCC] transition-all rounded-xl flex flex-col items-center gap-3`}
           >
             {image ? (
-              <div className="relative w-full h-full overflow-hidden rounded-xl">
+              <div className="relative w-full h-full overflow-hidden rounded-xl group">
                 <Image
                   src={image || previewUrl} // Use Redux state or local state for preview
                   alt="uploaded file preview"
                   fill
                   style={{ objectFit: "cover" }}
-                  unoptimized // Add this attribute to handle base64 image correctly
                 />
+
+                {/* Hover Overlay */}
+                <div
+                  className="absolute bottom-0 left-0 w-full h-1/2 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                  onClick={() => fileInputRef.current.click()}
+                >
+                  <div className="w-full h-full flex items-center justify-center gap-3 ">
+                    <p className="text-white text-lg font-PublicSans-Medium">
+                      Browse/Change Your File
+                    </p>
+                    <Image
+                      src="/icons/img_edit_icon.png"
+                      alt="uploaded file preview"
+                      width={30}
+                      height={30}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-7 w-full h-full justify-center items-center">
@@ -139,21 +161,23 @@ const AddProject = () => {
                 </p>
               </div>
             )}
-   {currentStep === "title" && (
-  <TitleSection
-    title={title}
-    onTitleChange={handleTitleChange}
-    onNext={handleNext}
-  />
-)}
+            {currentStep === "title" && (
+              <TitleSection
+                title={title}
+                onTitleChange={handleTitleChange}
+                onNext={handleNext}
+                onClose={handleClose}
+              />
+            )}
 
-{currentStep === "skills" && (
-  <SkillsSection
-    skills={skills}
-    onSkillsChange={handleSkillsChange}
-    onNext={handleNext}
-  />
-)}
+            {currentStep === "skills" && (
+              <SkillsSection
+                skills={skills}
+                onSkillsChange={handleSkillsChange}
+                onNext={handleNext}
+                onClose={handleClose}
+              />
+            )}
 
             {currentStep === "domain" && (
               <div className="bg-white p-6 rounded-lg w-[60%] flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-[#3A3084]">

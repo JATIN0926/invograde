@@ -2,14 +2,14 @@
 // TitleSection.js
 import React from 'react';
 
-const TitleSection = ({ title, onTitleChange, onNext }) => {
+const TitleSection = ({ title, onTitleChange, onNext ,onClose}) => {
   return (
     <div className="absolute inset-0 bg-white rounded-lg shadow-lg w-[450px] h-[200px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
       <div className="relative p-6">
         {/* Close button */}
         <button 
           className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-xl"
-          onClick={onNext}
+          onClick={onClose}
         >
           ×
         </button>

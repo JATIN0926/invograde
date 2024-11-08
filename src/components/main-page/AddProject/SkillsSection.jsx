@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-const SkillsSection = ({ skills, onSkillsChange, onNext }) => {
+const SkillsSection = ({ skills, onSkillsChange, onNext ,onClose}) => {
   const [newSkill, setNewSkill] = useState('');
   const [addToResume, setAddToResume] = useState(false);
 
@@ -27,7 +27,7 @@ const SkillsSection = ({ skills, onSkillsChange, onNext }) => {
     
         <button 
           className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-xl"
-          onClick={onNext}
+          onClick={onClose}
         >
           ×
         </button>
