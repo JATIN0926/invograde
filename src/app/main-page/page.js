@@ -1,8 +1,5 @@
 "use client";
-
 import React, { useState } from "react";
-import SideBar from '@/components/main-page/Sidebar/Sidebar';
-import Navbar from '@/components/main-page/Navbar/Navbar';
 import ProjectsArea from '@/components/main-page/ProjectsArea/ProjectsArea';
 
 const Page = () => {

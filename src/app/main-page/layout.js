@@ -17,7 +17,7 @@ export default function MainPageLayout({ children }) {
         {/* Sidebar remains consistent across different routes */}
         <SideBar isOpen={isOpen} toggleSidebar={() => dispatch(toggleSidebar())} />
         {/* Right side content will change based on the route */}
-        <div className="flex-1 transition-all">
+        <div className=" w-[85%] transition-all">
           {children}
         </div>
       </div>

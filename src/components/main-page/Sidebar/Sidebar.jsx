@@ -1,17 +1,17 @@
-// Sidebar.js
-"use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar, setProjectsActive } from "@/redux/slices/sidebarSlice";
-import { setCurrentStep } from "@/redux/slices/projectSlice.js"; // Import the action to update currentStep
+import { setCurrentStep } from "@/redux/slices/projectSlice.js";
+import Image from "next/image";
 
 const Sidebar = ({ isOpen }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isProjectsActive = useSelector((state) => state.sidebar.isProjectsActive);
-  
+  const isProjectsActive = useSelector(
+    (state) => state.sidebar.isProjectsActive
+  );
+
   const handleProjectsClick = () => {
     dispatch(setProjectsActive(!isProjectsActive));
     router.push("/main-page/projects");
@@ -26,28 +26,36 @@ const Sidebar = ({ isOpen }) => {
   return (
     <div
       className={`${
-        isOpen ? "w-[17%]" : "w-[7%]"
+        isOpen ? "w-[17%]" : "w-[6%]"
       } transition-all duration-300 pt-8 border-r-2 border-r-[#84848440] drop-shadow-[#84848440]`}
     >
       <div className="w-full flex flex-col items-start pl-4 justify-start gap-5">
         <div
-          className="w-full flex items-center pl-2.5 hover:bg-[#DDCCFF] transition-all cursor-pointer gap-2 rounded-md"
+          className="w-[85%] flex items-center pl-2.5 p-2 hover:bg-[#DDCCFF] transition-all cursor-pointer gap-[1.85rem] rounded-md"
           onClick={() => dispatch(toggleSidebar())}
         >
-          <div className="w-6 h-6 relative">
-            <Image src="/icons/Sidebar_open_close.png" alt="Sidebar_open_close" fill />
+          <div className="flex justify-center items-center pl-6 w-6 h-6 relative">
+            <Image
+              src="/icons/Sidebar_open_close.png"
+              alt="Sidebar_open_close"
+              fill
+            />
           </div>
+          {/* Smooth transition for the Collapse text */}
           <h1
-            className={`text-lg transition-all duration-300 ${
-              isOpen ? "opacity-100 max-w-full" : "opacity-0 max-w-0"
-            } overflow-hidden`}
+            className={`text-[1.1rem] font-PublicSans-Regular transition-all duration-300 transform ${
+              isOpen ? "opacity-100 scale-100" : "opacity-0 scale-90"
+            }`}
+            style={{
+              visibility: isOpen ? "visible" : "hidden",
+              transition: "opacity 0.3s, transform 0.3s",
+            }}
           >
             Collapse
           </h1>
         </div>
-
         <div
-          className={`rounded-md flex items-center gap-1 cursor-pointer transition-all w-full ${
+          className={`rounded-md flex items-center cursor-pointer transition-all gap-5 w-[85%] ${
             isProjectsActive ? "bg-[#DDCCFF]" : ""
           }`}
           onClick={() => {
@@ -56,14 +64,29 @@ const Sidebar = ({ isOpen }) => {
             }
           }}
         >
-          <div className="w-[2.7rem] aspect-square relative">
+          <div className="w-[2.7rem] h-[2.7rem] min-w-[2.7rem] min-h-[2.7rem] relative">
             <Image src="/icons/Projects.png" alt="Projects" fill />
           </div>
-          {isOpen && <h1 className="text-lg">Projects</h1>}
+          <h1
+            className={`text-base font-PublicSans-Regular transition-opacity duration-300 overflow-hidden ${
+              isOpen ? "opacity-100 max-w-full" : "opacity-0 max-w-0"
+            }`}
+            style={{
+              whiteSpace: "nowrap", // Prevents text wrapping during transition
+            }}
+          >
+            Projects
+          </h1>
         </div>
 
+        {/* Conditional rendering with fixed width styling */}
         {isProjectsActive && (
-          <div className="w-[90%] self-center flex items-start justify-between">
+          <div
+            className="w-full self-center flex items-start justify-between px-2 pr-6"
+            style={{
+              minWidth: "10rem", // Add min width to prevent shrinking
+            }}
+          >
             <div className="flex flex-col justify-between items-center h-[10rem]">
               <div
                 className="w-6 h-6 relative cursor-pointer"

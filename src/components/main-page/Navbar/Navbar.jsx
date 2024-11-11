@@ -8,9 +8,9 @@ const Navbar = () => {
   return (
     <div>
       <nav className="w-full bg-white border-b border-gray-200 px-4 py-2  drop-shadow-xl">
-        <div className="w-full flex items-center justify-between gap-4">
+        <div className="w-full flex items-center justify-between gap-4 px-2">
           <div className="flex items-center gap-6">
-            <div className="w-8 h-8 relative">
+            <div className="w-10 h-10 relative">
               <Image src="/icons/InvogradeIcon.png" alt="InvogradeIcon" fill />
             </div>
           </div>

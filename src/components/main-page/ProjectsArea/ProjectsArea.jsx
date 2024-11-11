@@ -7,7 +7,7 @@ const ProjectsArea = ({ isOpen }) => {
   return (
     <div
       className={`transition-all duration-300 ${
-        isOpen ? "w-[85%]" : "w-[95%]"
+        isOpen ? "w-[80%]" : "w-full"
       } p-10 flex flex-col gap-8 overflow-y-auto`}
     >
       <h1 className="text-black text-[1.15rem] font-medium">For You</h1>
