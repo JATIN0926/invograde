@@ -13,6 +13,8 @@ import {
   setCurrentStep,
   nextStep,
 } from "@/redux/slices/projectSlice.js";
+import DomainSection from "./DomainSection";
+import TagsSection from "./TagsSection";
 
 const AddProject = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const AddProject = () => {
     useSelector((state) => state.project);
   const fileInputRef = useRef();
   const [previewUrl, setPreviewUrl] = useState("");
+  const textAreaRef = useRef();
 
   const handleImgChange = async (e) => {
     const file = e.target.files[0];
@@ -60,8 +63,8 @@ const AddProject = () => {
     dispatch(setTitle(e.target.value));
   };
 
-  const handleSkillsChange = (e) => {
-    dispatch(setSkills(e.target.value.split(","))); // Assuming a comma-separated list
+  const handleSkillsChange = (updatedSkills) => {
+    dispatch(setSkills(updatedSkills));
   };
 
   useEffect(() => {
@@ -78,6 +81,13 @@ const AddProject = () => {
   const handleClose = () => {
     dispatch(setCurrentStep(null)); // or set to "" based on your logic
   };
+
+  const applyTextFormat = (command) => {
+    textAreaRef.current.focus(); // Focus textarea for the execCommand
+    document.execCommand(command, false, null); // Execute the command
+    // dispatch(setDescription(textAreaRef.current.innerHTML)); // Update state with formatted text
+  };
+  console.log("description", description);
   return (
     <div className="flex flex-col items-start justify-start flex-grow py-12 px-10 pl-16 overflow-y-auto relative">
       {/* File Upload Input */}
@@ -180,32 +190,86 @@ const AddProject = () => {
             )}
 
             {currentStep === "domain" && (
-              <div className="bg-white p-6 rounded-lg w-[60%] flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-[#3A3084]">
-                <h2 className="text-lg font-PublicSans-Medium mb-4">
-                  Choose Domain
-                </h2>
-                <input
-                  type="text"
-                  value={domain}
-                  onChange={handleDomainChange}
-                  placeholder="Domain"
-                  className="border-2 p-2 w-full rounded"
-                />
-                <button
-                  onClick={handleNext}
-                  className="bg-[#5446BC] text-white p-2 mt-4 rounded"
-                >
-                  Finish
-                </button>
-              </div>
+              <DomainSection onNext={handleNext} onClose={handleClose} />
+            )}
+            {currentStep === "tags" && (
+              <TagsSection onNext={handleNext} onClose={handleClose} />
             )}
           </div>
-          <textarea
-            className="w-full border-[#787878] border-2 h-[12rem] rounded-lg p-4 text-[#3A3084] text-base font-PublicSans-Regular placeholder-[#787878] focus:outline-none transition-all resize-none"
-            placeholder="Add details of your Project to make it more efficient and better"
-            value={description}
-            onChange={handleDescriptionChange}
-          ></textarea>
+          <div className="relative h-[12rem] w-full">
+            {/* Textarea */}
+            <div
+              ref={textAreaRef}
+              className="w-full border-[#3A3084] border-2 h-full rounded-lg p-4 text-[#3A3084] text-base font-PublicSans-Regular placeholder-[#787878] focus:outline-none transition-all resize-none"
+              contentEditable
+              onBlur={() =>
+                dispatch(setDescription(textAreaRef.current.innerHTML))
+              }
+              dangerouslySetInnerHTML={{ __html: description }}
+            ></div>
+            {description.length === 0 ? (
+              <h1 className=" absolute left-4 top-4 text-[#BFBFBF] text-base font-PublicSans-Regular">
+                Add details of your Project to make it more efficient and
+                better*
+              </h1>
+            ) : (
+              <></>
+            )}
+
+            {/* Formatting Icons */}
+            <div className="absolute bottom-4 right-4">
+              <div className="flex items-center gap-3.5">
+                <Image
+                  src="/icons/bold.png"
+                  alt="bold"
+                  width={30}
+                  height={30}
+                  onClick={() => applyTextFormat("bold")}
+                  className="cursor-pointer"
+                />
+                <Image
+                  src="/icons/italic.png"
+                  alt="italic"
+                  width={25}
+                  height={25}
+                  onClick={() => applyTextFormat("italic")}
+                  className="cursor-pointer"
+                />
+                <Image
+                  src="/icons/underline.png"
+                  alt="underline"
+                  width={30}
+                  height={30}
+                  onClick={() => applyTextFormat("underline")}
+                  className="cursor-pointer"
+                />
+                <Image
+                  src="/icons/align-left.png"
+                  alt="align-left"
+                  width={25}
+                  height={25}
+                  onClick={() => applyTextFormat("justifyLeft")}
+                  className="cursor-pointer"
+                />
+                <Image
+                  src="/icons/align-center.png"
+                  alt="align-center"
+                  width={25}
+                  height={25}
+                  onClick={() => applyTextFormat("justifyCenter")}
+                  className="cursor-pointer"
+                />
+                <Image
+                  src="/icons/align-right.png"
+                  alt="align-right"
+                  width={25}
+                  height={25}
+                  onClick={() => applyTextFormat("justifyRight")}
+                  className="cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

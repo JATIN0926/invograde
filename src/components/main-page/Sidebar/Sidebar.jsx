@@ -11,6 +11,7 @@ const Sidebar = ({ isOpen }) => {
   const isProjectsActive = useSelector(
     (state) => state.sidebar.isProjectsActive
   );
+  const { currentStep } = useSelector((state) => state.project);
 
   const handleProjectsClick = () => {
     dispatch(setProjectsActive(!isProjectsActive));
@@ -92,44 +93,90 @@ const Sidebar = ({ isOpen }) => {
                 className="w-6 h-6 relative cursor-pointer"
                 onClick={() => dispatch(setCurrentStep("title"))}
               >
-                <Image src="/icons/giveTitle.png" alt="giveTitle" fill />
+                {currentStep === "title" ? (
+                  <Image
+                    src="/icons/giveTitle_focus.png"
+                    alt="giveTitle"
+                    fill
+                  />
+                ) : (
+                  <Image src="/icons/giveTitle.png" alt="giveTitle" fill />
+                )}
               </div>
               <div
                 className="w-6 h-6 relative cursor-pointer"
                 onClick={() => dispatch(setCurrentStep("skills"))}
               >
-                <Image src="/icons/skillsUsed.png" alt="skillsUsed" fill />
+                {currentStep === "skills" ? (
+                  <Image
+                    src="/icons/skillsUsed_focus.png"
+                    alt="skillsUsed"
+                    fill
+                  />
+                ) : (
+                  <Image src="/icons/skillsUsed.png" alt="skillsUsed" fill />
+                )}
               </div>
               <div
                 className="w-6 h-6 relative cursor-pointer"
                 onClick={() => dispatch(setCurrentStep("domain"))}
               >
-                <Image src="/icons/chooseDomain.png" alt="chooseDomain" fill />
+                {currentStep === "domain" ? (
+                  <Image
+                    src="/icons/chooseDomain_focus.png"
+                    alt="chooseDomain"
+                    fill
+                  />
+                ) : (
+                  <Image
+                    src="/icons/chooseDomain.png"
+                    alt="chooseDomain"
+                    fill
+                  />
+                )}
               </div>
-              <div className="w-6 h-6 relative cursor-pointer">
-                <Image src="/icons/AddTags.png" alt="AddTags" fill />
+              <div
+                className="w-6 h-6 relative cursor-pointer"
+                onClick={() => dispatch(setCurrentStep("tags"))}
+              >
+                {currentStep === "tags" ? (
+                  <Image src="/icons/AddTags_focus.png" alt="AddTags" fill />
+                ) : (
+                  <Image src="/icons/AddTags.png" alt="AddTags" fill />
+                )}
               </div>
             </div>
             <div className="flex flex-col justify-between items-start h-[10rem] gap-3">
               <h1
-                className="text-[#774FCC] text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline"
+                className={` ${
+                  currentStep === "title" ? "text-[#3A3084]" : "text-[#774FCC]"
+                }  text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline`}
                 onClick={() => dispatch(setCurrentStep("title"))}
               >
                 Give it a Title
               </h1>
               <h1
-                className="text-[#774FCC] text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline"
+                className={` ${
+                  currentStep === "skills" ? "text-[#3A3084]" : "text-[#774FCC]"
+                } text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline`}
                 onClick={() => dispatch(setCurrentStep("skills"))}
               >
                 Skills used
               </h1>
               <h1
-                className="text-[#774FCC] text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline"
+                className={` ${
+                  currentStep === "domain" ? "text-[#3A3084]" : "text-[#774FCC]"
+                } text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline`}
                 onClick={() => dispatch(setCurrentStep("domain"))}
               >
                 Choose Domain
               </h1>
-              <h1 className="text-[#774FCC] text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline">
+              <h1
+                className={` ${
+                  currentStep === "tags" ? "text-[#3A3084]" : "text-[#774FCC]"
+                } text-[0.9rem] font-PublicSans-Medium cursor-pointer hover:underline`}
+                onClick={() => dispatch(setCurrentStep("tags"))}
+              >
                 Add Tags
               </h1>
             </div>

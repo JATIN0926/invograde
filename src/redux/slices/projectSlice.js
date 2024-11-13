@@ -7,6 +7,8 @@ const initialState = {
   title: "",
   skills: [],
   domain: "",
+  categories: [], // Field to store selected categories
+  tags: [], // New field to store tags
   currentStep: "description",
 };
 
@@ -32,15 +34,41 @@ const projectSlice = createSlice({
     setCurrentStep: (state, action) => {
       state.currentStep = action.payload;
     },
+    addCategory: (state, action) => {
+      // Only add if the category isn't already selected and limit to 5 categories
+      if (
+        state.categories.length < 5 &&
+        !state.categories.includes(action.payload)
+      ) {
+        state.categories.push(action.payload);
+      }
+    },
+    removeCategory: (state, action) => {
+      state.categories = state.categories.filter(
+        (category) => category !== action.payload
+      );
+    },
+    addTag: (state, action) => {
+      if (!state.tags) {
+        state.tags = [];
+      }
+      if (state.tags.length < 5 && !state.tags.includes(action.payload)) {
+        state.tags.push(action.payload);
+      }
+    },
+
+    removeTag: (state, action) => {
+      state.tags = state.tags.filter((tag) => tag !== action.payload);
+    },
     nextStep: (state) => {
-      const steps = ["description", "title", "skills", "domain"];
+      const steps = ["description", "title", "skills", "domain", "tags"];
       const currentIndex = steps.indexOf(state.currentStep);
       if (currentIndex < steps.length - 1) {
         state.currentStep = steps[currentIndex + 1];
       }
     },
     previousStep: (state) => {
-      const steps = ["description", "title", "skills", "domain"];
+      const steps = ["description", "title", "skills", "domain", "tags"];
       const currentIndex = steps.indexOf(state.currentStep);
       if (currentIndex > 0) {
         state.currentStep = steps[currentIndex - 1];
@@ -56,6 +84,10 @@ export const {
   setSkills,
   setDomain,
   setCurrentStep,
+  addCategory,
+  removeCategory,
+  addTag,
+  removeTag,
   nextStep,
   previousStep,
 } = projectSlice.actions;
