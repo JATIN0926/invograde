@@ -72,9 +72,13 @@ const DomainSection = ({ onNext, onClose }) => {
         <select
           value={selectedOption}
           onChange={handleCategorySelect}
-          className="block w-full mb-3 p-2 border border-[#774FCC] rounded-md text-base text-[#774FCC] font-PublicSans-Regular"
+          className=" text-center w-full mb-3 p-2 border border-[#774FCC] rounded-md text-base text-[#774FCC] font-PublicSans-Regular"
         >
-          <option value="">Choose any five domains for your work</option>
+          <option value="">
+            {categories?.length === 5
+              ? "Max categories reached , remove any one to add new"
+              : " Choose any five domains for your work"}
+          </option>
           {availableCategories.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -88,9 +92,13 @@ const DomainSection = ({ onNext, onClose }) => {
             value={customCategory}
             onChange={(e) => setCustomCategory(e.target.value)}
             onKeyDown={handleCustomInputKeyPress}
-            placeholder={` ${categories?.length === 5 ? "Max categories reached" : "Enter custom category and press Enter"} `}
+            placeholder={` ${
+              categories?.length === 5
+                ? "Max categories reached"
+                : "Enter custom category and press Enter"
+            } `}
             className="p-2 border border-gray-300 rounded-md mb-4 w-full text-base"
-            disabled = {categories?.length === 5}
+            disabled={categories?.length === 5}
           />
         )}
 

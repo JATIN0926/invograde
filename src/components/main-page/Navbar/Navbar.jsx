@@ -4,6 +4,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <div>
@@ -41,8 +42,44 @@ const Navbar = () => {
             <div className="w-6 h-6 relative cursor-pointer">
               <Image src="/icons/notifications.png" alt="notifications" fill />
             </div>
-            <div className="w-10 h-10 relative cursor-pointer">
-              <Image src="/images/ProfileAvatar.png" alt="ProfileAvatar" fill />
+            <div className="relative" onClick={() => setShowDropdown(!showDropdown)}>
+              <div className="w-10 h-10 relative cursor-pointer" >
+                <Image src="/images/ProfileAvatar.png" alt="ProfileAvatar" fill />
+              </div>
+              
+              {showDropdown && (
+                <div className=" absolute right-5 mt-2 w-[20rem] bg-white rounded-lg shadow-lg border border-gray-200">
+                  <div className="p-3 px-4">
+                    {/* Row 1 */}
+                    <div className="flex items-center gap-3 pb-3 border-b border-gray-200">
+                      <div className="w-10 h-10 relative">
+                        <Image src="/images/ProfileAvatar.png" alt="Profile" fill />
+                      </div>
+                      <div className="flex flex-col items-start justify-center">
+
+                      <h1 className="text-gray-800 font-medium">Shreyas Saxena</h1>
+                      <h2 className="">shreyassaxena0@gmail.com</h2>
+                      </div>
+                    </div>
+                    
+                    {/* Row 2 */}
+                    <div className="flex items-center gap-3 py-3 border-b border-gray-200 cursor-pointer hover:bg-gray-50">
+                      <div className="w-5 h-5 relative">
+                        <Image src="/icons/settings.png" alt="Settings" fill />
+                      </div>
+                      <span className="text-gray-700">Account Settings</span>
+                    </div>
+                    
+                    {/* Row 3 */}
+                    <div className="flex items-center gap-3 pt-3 cursor-pointer hover:bg-gray-50">
+                      <div className="w-5 h-5 relative">
+                        <Image src="/icons/LogOut.png" alt="Logout" fill />
+                      </div>
+                      <span className="text-gray-700">Logout</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

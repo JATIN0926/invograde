@@ -8,12 +8,11 @@ const ProjectsArea = ({ isOpen }) => {
     <div
       className={`transition-all duration-300 ${
         isOpen ? "w-[80%]" : "w-full"
-      } p-10 flex flex-col gap-8 overflow-y-auto`}
+      } p-10 flex flex-col gap-8 overflow-y-auto z-[40]`}
     >
       <h1 className="text-black text-[1.15rem] font-medium">For You</h1>
-      <div className="flex items-center justify-between flex-wrap gap-10 w-full">
+      <div className="flex items-center justify-between flex-wrap gap-10 w-full z-[40]">
         <ProjectCard />
-        {/* Render more project cards */}
         <ProjectCard />
         <ProjectCard />
         <ProjectCard />

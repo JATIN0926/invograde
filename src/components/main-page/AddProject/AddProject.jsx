@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import { Editor, EditorState, RichUtils } from "draft-js";
+import "draft-js/dist/Draft.css"; // Add Draft.js styles
 import TitleSection from "./TitleSection";
 import SkillsSection from "./SkillsSection";
 import { useEffect, useRef, useState } from "react";
@@ -20,9 +22,18 @@ const AddProject = () => {
   const dispatch = useDispatch();
   const { description, image, currentStep, title, skills, domain } =
     useSelector((state) => state.project);
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
   const fileInputRef = useRef();
   const [previewUrl, setPreviewUrl] = useState("");
   const textAreaRef = useRef();
+
+  const saveDescription = () => {
+    const content = editorState.getCurrentContent();
+    const plainText = content.getPlainText(); // Convert content to plain text
+    dispatch(setDescription(plainText));
+  };
 
   const handleImgChange = async (e) => {
     const file = e.target.files[0];
@@ -49,6 +60,14 @@ const AddProject = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+  };
+
+  const handleFormatting = (style) => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
+
+  const handleAlignment = (alignment) => {
+    setEditorState(RichUtils.toggleBlockType(editorState, alignment));
   };
 
   const handleDescriptionChange = (e) => {
@@ -82,12 +101,51 @@ const AddProject = () => {
     dispatch(setCurrentStep(null)); // or set to "" based on your logic
   };
 
-  const applyTextFormat = (command) => {
-    textAreaRef.current.focus(); // Focus textarea for the execCommand
-    document.execCommand(command, false, null); // Execute the command
-    // dispatch(setDescription(textAreaRef.current.innerHTML)); // Update state with formatted text
+  const applyTextFormat = (format) => {
+    const selection = window.getSelection();
+    const range = selection?.getRangeAt(0); // Get the current range
+
+    if (range && !selection.isCollapsed) {
+      // Text is selected
+      const wrapper = document.createElement(format === "bold" ? "b" : "i");
+
+      // Check if the range already has the format
+      const parent = selection.anchorNode.parentElement;
+      if (
+        (format === "bold" && parent.tagName === "B") ||
+        (format === "italic" && parent.tagName === "I")
+      ) {
+        // Remove formatting
+        const formattedText = parent.innerHTML;
+        parent.replaceWith(document.createTextNode(formattedText));
+      } else {
+        // Apply formatting
+        range.surroundContents(wrapper);
+      }
+    } else {
+      // No text is selected, apply to whole content
+      const currentContent = textAreaRef.current.innerHTML;
+      if (format === "bold") {
+        // Check if already bold
+        if (textAreaRef.current.innerHTML.startsWith("<b>")) {
+          textAreaRef.current.innerHTML = currentContent.replace(/<\/?b>/g, "");
+        } else {
+          textAreaRef.current.innerHTML = `<b>${currentContent}</b>`;
+        }
+      } else if (format === "italic") {
+        // Check if already italic
+        if (textAreaRef.current.innerHTML.startsWith("<i>")) {
+          textAreaRef.current.innerHTML = currentContent.replace(/<\/?i>/g, "");
+        } else {
+          textAreaRef.current.innerHTML = `<i>${currentContent}</i>`;
+        }
+      }
+    }
+
+    // Update Redux store
+    dispatch(setDescription(textAreaRef.current.innerHTML));
   };
-  console.log("description", description);
+
   return (
     <div className="flex flex-col items-start justify-start flex-grow py-12 px-10 pl-16 overflow-y-auto relative">
       {/* File Upload Input */}
@@ -196,78 +254,65 @@ const AddProject = () => {
               <TagsSection onNext={handleNext} onClose={handleClose} />
             )}
           </div>
-          <div className="relative h-[12rem] w-full">
-            {/* Textarea */}
-            <div
-              ref={textAreaRef}
-              className="w-full border-[#3A3084] border-2 h-full rounded-lg p-4 text-[#3A3084] text-base font-PublicSans-Regular placeholder-[#787878] focus:outline-none transition-all resize-none"
-              contentEditable
-              onBlur={() =>
-                dispatch(setDescription(textAreaRef.current.innerHTML))
-              }
-              dangerouslySetInnerHTML={{ __html: description }}
-            ></div>
-            {description.length === 0 ? (
-              <h1 className=" absolute left-4 top-4 text-[#BFBFBF] text-base font-PublicSans-Regular">
-                Add details of your Project to make it more efficient and
-                better*
-              </h1>
-            ) : (
-              <></>
-            )}
-
-            {/* Formatting Icons */}
-            <div className="absolute bottom-4 right-4">
-              <div className="flex items-center gap-3.5">
-                <Image
-                  src="/icons/bold.png"
-                  alt="bold"
-                  width={30}
-                  height={30}
-                  onClick={() => applyTextFormat("bold")}
-                  className="cursor-pointer"
-                />
-                <Image
-                  src="/icons/italic.png"
-                  alt="italic"
-                  width={25}
-                  height={25}
-                  onClick={() => applyTextFormat("italic")}
-                  className="cursor-pointer"
-                />
-                <Image
-                  src="/icons/underline.png"
-                  alt="underline"
-                  width={30}
-                  height={30}
-                  onClick={() => applyTextFormat("underline")}
-                  className="cursor-pointer"
-                />
-                <Image
-                  src="/icons/align-left.png"
-                  alt="align-left"
-                  width={25}
-                  height={25}
-                  onClick={() => applyTextFormat("justifyLeft")}
-                  className="cursor-pointer"
-                />
-                <Image
-                  src="/icons/align-center.png"
-                  alt="align-center"
-                  width={25}
-                  height={25}
-                  onClick={() => applyTextFormat("justifyCenter")}
-                  className="cursor-pointer"
-                />
-                <Image
-                  src="/icons/align-right.png"
-                  alt="align-right"
-                  width={25}
-                  height={25}
-                  onClick={() => applyTextFormat("justifyRight")}
-                  className="cursor-pointer"
-                />
-              </div>
+          <div className="relative h-[15rem] w-full">
+            {/* Draft.js Text Editor */}
+            <div className="border-2 border-[#3A3084] rounded-lg p-4 text-[#3A3084] h-[70%] overflow-y-auto">
+              <Editor
+                editorState={editorState}
+                onChange={setEditorState}
+                onBlur={saveDescription}
+              />
+            </div>
+            {/* Formatting Toolbar */}
+            <div className="absolute bottom-4 right-4 flex gap-3">
+              <Image
+                src="/icons/bold.png"
+                alt="bold"
+                width={35}
+                height={35}
+                className="cursor-pointer"
+                onClick={() => handleFormatting("BOLD")}
+              />
+              <Image
+                src="/icons/italic.png"
+                alt="italic"
+                width={20}
+                height={5}
+                className="cursor-pointer"
+                onClick={() => handleFormatting("ITALIC")}
+              />
+              <Image
+                src="/icons/underline.png"
+                alt="underline"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+                onClick={() => handleFormatting("UNDERLINE")}
+              />
+              <Image
+                src="/icons/align-left.png"
+                alt="align-left"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+                onClick={() => handleAlignment("left")}
+              />
+              <Image
+                src="/icons/align-center.png"
+                alt="align-center"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+                onClick={() => handleAlignment("center")}
+              />
+              <Image
+                src="/icons/align-right.png"
+                alt="align-right"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+                onClick={() => handleAlignment("right")}
+              />
             </div>
           </div>
         </div>

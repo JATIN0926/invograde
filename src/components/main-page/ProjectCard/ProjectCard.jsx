@@ -3,7 +3,7 @@ import React from 'react'
 
 const ProjectCard = () => {
   return (
-    <div className=' h-[15rem] w-[28%] flex flex-col gap-4 '>
+    <div className=' h-[15rem] w-[28%] flex flex-col gap-4  z-[40]'>
         <div className=" h-[80%]  w-full relative rounded-md">
             <Image src="/images/ProjectCardPlaceholder.png" alt='img' fill />
         </div>
