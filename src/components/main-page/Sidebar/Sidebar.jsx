@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen }) => {
     <div
       className={`${
         isOpen ? "w-[17%]" : "w-[6%]"
-      } transition-all duration-300 pt-8 border-r-2 border-r-[#84848440] drop-shadow-[#84848440]`}
+      } transition-all duration-300 pt-8 border-r-2 border-r-[#84848440] drop-shadow-[#84848440] min-h-[90vh]`}
     >
       <div className="w-full flex flex-col items-start pl-4 justify-start gap-5">
         <div
