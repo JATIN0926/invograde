@@ -1,9 +1,23 @@
-"use client"; // Ensure this is running on the client-side
-
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import ProjectCard from "../ProjectCard/ProjectCard";
+import ProjectDetailModal from "../ProjectDetailModal/ProjectDetailModal";
 
 const ProjectsArea = ({ isOpen }) => {
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const openModal = (projectData) => {
+    setSelectedProject(projectData);
+  };
+
+  const closeModal = () => {
+    // Allow time for exit animation
+    setTimeout(() => {
+      setSelectedProject(null);
+    }, 400); // Match transition duration
+  };
+  
+
   return (
     <div
       className={`transition-all duration-300 ${
@@ -12,19 +26,22 @@ const ProjectsArea = ({ isOpen }) => {
     >
       <h1 className="text-black text-[1.15rem] font-medium">For You</h1>
       <div className="flex items-center justify-between flex-wrap gap-10 w-full z-[40]">
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
+        {[...Array(12)].map((_, i) => (
+          <ProjectCard
+            key={i}
+            onClick={() => openModal({ title: `Project ${i + 1}` })}
+          />
+        ))}
       </div>
+
+      {/* Modal */}
+      {selectedProject && (
+        <ProjectDetailModal
+          isOpen={!!selectedProject}
+          onClose={closeModal}
+          projectData={selectedProject}
+        />
+      )}
     </div>
   );
 };
