@@ -103,7 +103,7 @@ const GettingStarted = () => {
           <p>Publish your lessons, tutorials and courses and get free verified certificates</p>
         </div>
       </div>
-      <RotatingReviews />
+      {/* <RotatingReviews /> */}
     </div>
   )
 }
