@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-
+import Link from "next/link";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <div>
-      <nav className="w-full bg-white border-b border-gray-200 px-4 py-2 drop-shadow-xl relative z-[10]">
+      <nav className="w-full bg-white border-b border-gray-200 px-4 py-2 drop-shadow-xl relative z-[100]">
         <div className="w-full flex items-center justify-between gap-4 px-2">
           <div className="flex items-center gap-6">
             <div className="w-10 h-10 relative">
@@ -66,10 +66,10 @@ const Navbar = () => {
                         />
                       </div>
                       <div className="flex flex-col items-start justify-center">
-                        <h1 className="  text-[0.9rem]">
-                          Shreyas Saxena
-                        </h1>
-                        <h2 className=" text-[0.8rem]">shreyassaxena0@gmail.com</h2>
+                        <h1 className="  text-[0.9rem]">Shreyas Saxena</h1>
+                        <h2 className=" text-[0.8rem]">
+                          shreyassaxena0@gmail.com
+                        </h2>
                       </div>
                     </div>
 
@@ -78,15 +78,29 @@ const Navbar = () => {
                       <div className="w-5 h-5 relative">
                         <Image src="/icons/settings.png" alt="Settings" fill />
                       </div>
-                      <span className=" text-black">Account Settings</span>
+                      <Link
+                        href={`/profile`}
+                        onClick={() => setShowDropdown(!showDropdown)}
+                      >
+                        <span className=" text-black">Account Settings</span>
+                      </Link>
                     </div>
 
                     {/* Row 3 */}
                     <div className=" w-full flex items-center gap-6 py-3 border-b border-gray-200 cursor-pointer hover:bg-gray-50">
                       <div className="w-5 h-5 relative">
-                        <Image src="/icons/edit_icon.png" alt="edit_icon" fill />
+                        <Image
+                          src="/icons/edit_icon.png"
+                          alt="edit_icon"
+                          fill
+                        />
                       </div>
-                      <span className=" text-black">My Resume</span>
+                      <Link
+                        href={`/profile/create-resume`}
+                        onClick={() => setShowDropdown(!showDropdown)}
+                      >
+                        <span className=" text-black">My Resume</span>
+                      </Link>
                     </div>
 
                     {/* Row 4 */}

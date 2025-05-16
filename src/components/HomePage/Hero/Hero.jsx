@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import "./hero.css";
 import Navbar from "../Navbar/Navbar";
-
+import Link from "next/link";
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(null);
@@ -104,10 +104,12 @@ const Hero = () => {
                   </div>
                 </div>
                 <div className="h-[30%] flex items-end">
-                  <button className="relative overflow-hidden group bg-[#3A3084] rounded-full p-4 px-16 font-semibold">
-                    <div className="absolute top-1/2 left-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5446BC] transition-all duration-500 group-hover:scale-[7] group-hover:opacity-100 opacity-0 z-10"></div>
-                    <h1 className="relative z-20">Get Started</h1>
-                  </button>
+                  <Link href={`/main-page`}>
+                    <button className="relative overflow-hidden group bg-[#3A3084] rounded-full p-4 px-16 font-semibold">
+                      <div className="absolute top-1/2 left-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5446BC] transition-all duration-500 group-hover:scale-[7] group-hover:opacity-100 opacity-0 z-10"></div>
+                      <h1 className="relative z-20">Get Started</h1>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

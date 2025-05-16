@@ -122,10 +122,10 @@ const ContactUs = () => {
                   onClick={() => handleCardSelect('card2')}
                 ></div>
                 <div
-                  className={`w-[80rem] absolute ${selectedCard === 'card2' ? "bg-[#774FCC]" : "bg-[#5446BC]"} h-[20rem] top-[-95%] z-10`}
+                  className={`w-[75rem] absolute ${selectedCard === 'card2' ? "bg-[#774FCC]" : "bg-[#5446BC]"} h-[15rem] top-[-45%] z-10`}
                   style={{
-                    clipPath: "ellipse(4% 40% at 50% 50%)",
-                    rotate: "90deg",
+                    clipPath: "inset(0 0 51% 0)",
+                    // rotate: "90deg",
                   }}
                 ></div>
                 <h1 className="text-white font-IBMPlexSans-SemiBold font-semibold z-20 text-lg -translate-y-3">
