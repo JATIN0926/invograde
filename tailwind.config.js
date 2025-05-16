@@ -24,6 +24,12 @@ module.exports = {
         "ReemKufiFun-Medium": ["ReemKufiFun Medium", "sans-serif"],
         "ReemKufiFun-Regular": ["ReemKufiFun Regular", "sans-serif"],
         "ReemKufiFun-SemiBold": ["ReemKufiFun SemiBold", "sans-serif"],
+        "PublicSans-Bold": ["PublicSans Bold", "sans-serif"],
+        "PublicSans-Light": ["PublicSans Light", "sans-serif"],
+        "PublicSans-Medium": ["PublicSans Medium", "sans-serif"],
+        "PublicSans-Regular": ["PublicSans Regular", "sans-serif"],
+        "PublicSans-SemiBold": ["PublicSans SemiBold", "sans-serif"],
+        "PublicSans-Thin": ["PublicSans Thin", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",
