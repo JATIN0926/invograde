@@ -3,6 +3,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import axiosInstance from "@/utils/axiosInstance";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/slices/userSlice";
 
 const CustomSelect = ({ options, selected, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,37 +46,75 @@ const CustomSelect = ({ options, selected, onChange }) => {
 const SignUp = () => {
   const router = useRouter();
   const [next, setNext] = useState(false);
-  const [emailOrPhone, setEmailOrPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const dispatch = useDispatch();
   const imgs = [
     "/icons/google.png",
     "/icons/twitter.png",
     "/icons/facebook.png",
     "/icons/linkedin.png",
   ];
+  const [formData, setFormData] = useState({
+    emailOrPhone: "",
+    password: "",
+    username: "",
+    career: "",
+  });
 
   const handleNext = () => {
-    if (!emailOrPhone || !password) {
+    if (!formData.emailOrPhone || !formData.password) {
       toast.error("Please fill in all fields.");
       return;
     }
     setNext(true);
   };
 
-  const handleGetStarted = () => {
+  const handleGetStarted = async () => {
+    const { username, career, emailOrPhone, password } = formData;
+
     if (!username) {
       toast.error("Please enter a username.");
       return;
     }
-    if (!selectedOption) {
+    if (!career) {
       toast.error("Please select your career.");
       return;
     }
-    // Redirect to /verifyemail
-    router.push("/verifymail");
+
+    let toastId; // to reference and update the loading toast
+
+    try {
+      console.log("formdata", formData);
+
+      // Show loading toast and store the ID
+      toastId = toast.loading("Processing your request..");
+
+      const res = await axiosInstance.post("/api/auth/register", {
+        ...formData,
+      });
+
+      console.log("res.data", res.data);
+
+      toast.success("Verification email sent!", {
+        id: toastId,
+      });
+
+      dispatch(setUser(res.data.userData));
+      router.push("/verifymail");
+    } catch (err) {
+      console.error(err);
+
+      // Update loading toast to error
+      toast.error("An error occurred. Please try again.", {
+        id: toastId,
+      });
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -85,10 +126,11 @@ const SignUp = () => {
               <div className="w-[65%] flex flex-col items-start justify-center gap-2 relative">
                 <h1 className="text-[#141520] font-bold">Create a username</h1>
                 <input
+                  name="username"
                   type="text"
                   className="w-full p-3 bg-white border-[1.5px] border-[#BCBCBC]"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={formData.username}
+                  onChange={handleChange}
                 />
               </div>
               <div className="w-[65%] flex flex-col items-start justify-center gap-2">
@@ -97,8 +139,10 @@ const SignUp = () => {
                 </h1>
                 <CustomSelect
                   options={["Designer", "Developer"]}
-                  selected={selectedOption}
-                  onChange={setSelectedOption}
+                  selected={formData.career}
+                  onChange={(option) =>
+                    setFormData((prev) => ({ ...prev, career: option }))
+                  }
                 />
               </div>
               <p className="w-[60%] text-center font-IBMPlexSans-Regular text-[0.81rem]">
@@ -118,30 +162,15 @@ const SignUp = () => {
             <>
               <div className="flex w-full flex-col items-center justify-center gap-2 relative">
                 <div className="w-[65%] flex flex-col items-start justify-center gap-1.5">
-                  <h1 className="text-[#141520] font-bold">
-                    Email or Phone Number
-                  </h1>
+                  <h1 className="text-[#141520] font-bold">Email</h1>
                   <div className="relative w-full">
                     <input
+                      name="emailOrPhone"
                       type="text"
-                      className="w-full p-2.5 pl-[4.5rem] bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
-                      value={emailOrPhone}
-                      onChange={(e) => setEmailOrPhone(e.target.value)}
+                      className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
+                      value={formData.emailOrPhone}
+                      onChange={handleChange}
                     />
-                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                      <Image
-                        src="/icons/india.png"
-                        alt="India flag"
-                        width={30}
-                        height={30}
-                      />
-                      <Image
-                        src="/icons/Arrow.png"
-                        alt="Arrow"
-                        width={10}
-                        height={10}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -152,11 +181,12 @@ const SignUp = () => {
                     Create Password
                   </h1>
                   <input
+                    name="password"
                     type={passwordVisible ? "text" : "password"}
                     placeholder="At least 6 characters"
                     className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={handleChange}
                   />
                   <div
                     className="absolute bottom-[15%] right-[5%] text-[#787878] text-[0.9rem] cursor-pointer"
@@ -180,16 +210,6 @@ const SignUp = () => {
               </div>
             </>
           )}
-
-          <div className="flex items-center justify-center gap-2">
-            <input
-              type="checkbox"
-              className="h-5 w-5 border-[#CFCFCF] border-[1.5px]"
-            />
-            <p className="text-[0.78rem] text-[#787878]">
-              I want to receive updates on my registered contact number
-            </p>
-          </div>
 
           <div className="flex flex-col items-center justify-center gap-3">
             <p className="text-[#787878] text-[0.82rem]">

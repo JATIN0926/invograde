@@ -1,7 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance.js";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const Verifymail = () => {
   const imgs = [
@@ -12,8 +17,10 @@ const Verifymail = () => {
   ];
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const inputRefs = useRef([]);
-  const [timeLeft, setTimeLeft] = useState(60); // Timer set to 60 seconds
+  const [timeLeft, setTimeLeft] = useState(60);
   const [showResend, setShowResend] = useState(false);
+  const router = useRouter();
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -59,6 +66,31 @@ const Verifymail = () => {
     setShowResend(false);
   };
 
+  const handleVerify = async () => {
+    const enteredOtp = otp.join("");
+
+    try {
+      console.log("user", user);
+      const response = await axiosInstance.post("/api/auth/verify", {
+        code: enteredOtp,
+        user,
+      });
+
+      if (response.data.success) {
+        toast.success("Signup successful!");
+        router.push("/login");
+      } else {
+        toast.error(response.data.message || "Verification failed");
+      }
+    } catch (error) {
+      console.error("Verification error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Something went wrong during verification"
+      );
+    }
+  };
+
   return (
     <div className="bg-login-bg bg-cover bg-center h-screen -z-10 w-screen max-w-full flex items-center justify-center">
       <div className="shadow-[#535353] rounded-l-xl shadow-md flex items-center justify-center h-[89vh] w-[80vw]">
@@ -69,7 +101,7 @@ const Verifymail = () => {
               <p className="text-[#457FCC] text-center">
                 A verification code has been sent to your email id
               </p>
-              <h1 className="text-[#141520] font-bold">shreyas123@gmail.com</h1>
+              <h1 className="text-[#141520] font-bold">`${user.email}`</h1>
             </div>
           </div>
           <div className="w-full flex flex-col items-center justify-center gap-3">
@@ -96,7 +128,9 @@ const Verifymail = () => {
                 Resend OTP
               </h2>
             ) : (
-              <h2 className="text-[#787878]">Resend code in {timeLeft} seconds</h2>
+              <h2 className="text-[#787878]">
+                Resend code in {timeLeft} seconds
+              </h2>
             )}
           </div>
 
@@ -107,6 +141,7 @@ const Verifymail = () => {
             <button
               className="bg-[#3A3084] p-2 px-8 text-base rounded-md text-white font-semibold"
               type="submit"
+              onClick={handleVerify}
             >
               Confirm
             </button>

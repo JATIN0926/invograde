@@ -1,15 +1,53 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/redux/slices/userSlice";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [formData, setFormData] = useState({ emailOrPhone: "", password: "" });
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const user = useSelector((state) => state.user.user);
+
   const imgs = [
     "/icons/google.png",
     "/icons/twitter.png",
     "/icons/facebook.png",
     "/icons/linkedin.png",
   ];
+
+  const handleSubmit = async () => {
+    const loading = toast.loading("Logging in...");
+    try {
+      console.log(formData);
+      const response = await axiosInstance.post("/api/auth/login", formData);
+
+      if (response.data.success) {
+        toast.success("Login successful!", { id: loading });
+
+        // ✅ Only set in Redux if not already set
+        if (!user) {
+          dispatch(setUser(response.data.userData));
+        }
+
+        router.push("/");
+      } else {
+        toast.error(response.data.message || "Login failed", { id: loading });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(
+        error.response?.data?.message || "Something went wrong during login",
+        { id: loading }
+      );
+    }
+  };
 
   return (
     <div className="bg-login-bg bg-cover bg-center h-screen -z-10 w-screen max-w-full flex items-center justify-center">
@@ -22,14 +60,12 @@ const Login = () => {
               </h1>
               <input
                 type="email"
-                name=""
-                id=""
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, emailOrPhone: e.target.value }))
+                }
                 className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
               />
-            </div>
-            <div className="flex items-center justify-center gap-2 absolute left-[20%] top-[50%]">
-              <Image src="/icons/india.png" alt="img" width={30} height={30} />
-              <Image src="/icons/Arrow.png" alt="img" width={10} height={10} />
             </div>
           </div>
           <div className="w-full flex flex-col items-center justify-center gap-2">
@@ -39,8 +75,10 @@ const Login = () => {
               </h1>
               <input
                 type={passwordVisible ? "text" : "password"}
-                name=""
-                id=""
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, password: e.target.value }))
+                }
                 className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] rounded-md text-[0.9rem]"
               />
               <div
@@ -65,18 +103,10 @@ const Login = () => {
                 <Image key={i} src={img} alt="img" width={30} height={30} />
               ))}
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                className="h-5 w-5 border-[#CFCFCF] border-[1.5px]"
-              />
-              <p className="text-[0.78rem] text-[#787878]">Keep me logged in</p>
-            </div>
             <button
               className="bg-[#3A3084] p-2 px-8 text-base rounded-md text-white font-semibold"
               type="submit"
+              onClick={handleSubmit}
             >
               Login
             </button>
@@ -86,7 +116,11 @@ const Login = () => {
             className="p-2.5 px-12 text-base font-normal rounded-full border-[1px] border-black text-[#787878]"
             type="submit"
           >
-            Don’t have an account? <span className="font-bold">Register</span>
+            Don’t have an account?{" "}
+            <Link href={`/signup`}>
+              {" "}
+              <span className="font-bold hover:underline">Register</span>{" "}
+            </Link>
           </button>
         </div>
         <div className="w-1/2 relative h-full">
