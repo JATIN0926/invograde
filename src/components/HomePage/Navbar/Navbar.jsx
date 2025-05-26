@@ -2,8 +2,10 @@
 import Link from "next/link";
 import "./style.css";
 import ProfileComponent from "../ProfileComponent/ProfileComponent";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user.user);
   return (
     <div className=" z-[100] w-full flex items-center justify-between py-4 px-20  absolute top-3">
       <h1 className="text-3xl font-light font-Snippet-Regular tracking-[0.2em]">

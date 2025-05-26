@@ -1,9 +1,11 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import MyProjects from "../MyProjects/MyProjects";
+import { useSelector } from "react-redux";
 
 const ProfilePage = ({ isOpen }) => {
   const fileInputRef = useRef(null);
+  const user = useSelector((state) => state.user.user);
 
   const handleFileUploadClick = () => {
     fileInputRef.current.click();
@@ -16,7 +18,7 @@ const ProfilePage = ({ isOpen }) => {
       } p-10 flex flex-col gap-8 overflow-y-auto z-[40]`}
     >
       <div className="flex flex-col items-start justify-center gap-6">
-        <h1>Welcome, Shreyas !</h1>
+        <h1>Welcome, {user.username} !</h1>
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center justify-center gap-6">
             <div className="w-20 h-20 relative cursor-pointer">
@@ -24,10 +26,10 @@ const ProfilePage = ({ isOpen }) => {
             </div>
             <div className="flex flex-col items-start justify-center gap-2">
               <h2 className="font-PublicSans-SemiBold text-[1.2rem]">
-                Shreyas Saxena
+                {user.username}
               </h2>
               <h3 className="font-PublicSans-Regular text-[0.9rem] text-gray-600">
-                shreyassaxena0@gmail.com
+                {user.email}
               </h3>
             </div>
           </div>
@@ -44,6 +46,7 @@ const ProfilePage = ({ isOpen }) => {
               <input
                 type="text"
                 placeholder="Your First Name"
+                value={user.username}
                 className="w-full p-3 rounded-lg bg-[#F9F9F9] text-gray-500 outline-none border-none placeholder:text-[0.9rem] placeholder:font-light"
               />
             </div>
@@ -56,6 +59,7 @@ const ProfilePage = ({ isOpen }) => {
               <input
                 type="text"
                 placeholder="Designer/ Developer"
+              value={user.careerType}
                 className="w-full p-3 rounded-lg bg-[#F9F9F9] text-gray-500 outline-none border-none placeholder:text-[0.9rem] placeholder:font-light"
               />
             </div>
