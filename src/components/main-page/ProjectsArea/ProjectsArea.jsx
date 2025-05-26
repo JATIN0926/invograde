@@ -11,10 +11,9 @@ const ProjectsArea = ({ isOpen }) => {
   };
 
   const closeModal = () => {
-    // Allow time for exit animation
     setTimeout(() => {
       setSelectedProject(null);
-    }, 400); // Match transition duration
+    }, 400); 
   };
   
 

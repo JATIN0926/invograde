@@ -1,4 +1,4 @@
-// redux/slices/projectSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -7,8 +7,8 @@ const initialState = {
   title: "",
   skills: [],
   domain: "",
-  categories: [], // Field to store selected categories
-  tags: [], // New field to store tags
+  categories: [],
+  tags: [], 
   currentStep: "description",
 };
 

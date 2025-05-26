@@ -31,9 +31,9 @@ const Login = () => {
       if (response.data.success) {
         toast.success("Login successful!", { id: loading });
 
-        // ✅ Only set in Redux if not already set
+        console.log("response", response.data.user);
         if (!user) {
-          dispatch(setUser(response.data.userData));
+          dispatch(setUser(response.data.user));
         }
 
         router.push("/");
@@ -62,7 +62,10 @@ const Login = () => {
                 type="email"
                 value={formData.email}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, emailOrPhone: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    emailOrPhone: e.target.value,
+                  }))
                 }
                 className="w-full p-2.5 bg-white border-[1.5px] border-[#BCBCBC] placeholder:text-[#C3C3C3] rounded-md text-[0.9rem]"
               />
