@@ -146,6 +146,8 @@ const AddProject = () => {
     dispatch(setDescription(textAreaRef.current.innerHTML));
   };
 
+  
+
   return (
     <div className="flex flex-col items-start justify-start flex-grow py-12 px-10 pl-16 overflow-y-auto relative">
       {/* File Upload Input */}

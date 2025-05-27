@@ -101,7 +101,7 @@ const Verifymail = () => {
               <p className="text-[#457FCC] text-center">
                 A verification code has been sent to your email id
               </p>
-              <h1 className="text-[#141520] font-bold">`${user.email}`</h1>
+              <h1 className="text-[#141520] font-bold">{user.email}</h1>
             </div>
           </div>
           <div className="w-full flex flex-col items-center justify-center gap-3">

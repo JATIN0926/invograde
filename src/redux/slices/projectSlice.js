@@ -6,7 +6,6 @@ const initialState = {
   image: null,
   title: "",
   skills: [],
-  domain: "",
   categories: [],
   tags: [], 
   currentStep: "description",

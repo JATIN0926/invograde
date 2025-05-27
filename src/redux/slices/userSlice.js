@@ -1,8 +1,7 @@
-// store/slices/userSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null, // stores userData from backend
+  user: null,
 };
 
 const userSlice = createSlice({

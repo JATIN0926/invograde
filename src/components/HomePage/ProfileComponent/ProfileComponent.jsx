@@ -1,11 +1,39 @@
+import { clearUser } from "@/redux/slices/userSlice";
+import axiosInstance from "@/utils/axiosInstance";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileComponent = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const loading = toast.loading("Logging out...");
+    try {
+      const response = await axiosInstance.post("/api/auth/logout");
+      if (response.data.success) {
+        toast.success("Logout successful!", { id: loading });
+        setShowDropdown(!showDropdown);
+        dispatch(clearUser());
+
+        router.push("/");
+      } else {
+        toast.error(response.data.message || "Logout failed", { id: loading });
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error(
+        error.response?.data?.message || "Something went wrong during logout",
+        { id: loading }
+      );
+    }
+  };
   return (
     <div className="relative z-[20]">
       <div
@@ -64,7 +92,9 @@ const ProfileComponent = () => {
               <div className="w-5 h-5 relative">
                 <Image src="/icons/LogOut.png" alt="Logout" fill />
               </div>
-              <span className=" text-black">Logout</span>
+              <span className=" text-black" onClick={handleLogout}>
+                Logout
+              </span>
             </div>
           </div>
         </div>

@@ -2,10 +2,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTag, removeTag } from "@/redux/slices/projectSlice";
+import toast from "react-hot-toast";
+import axiosInstance from "@/utils/axiosInstance";
+import { toggleSidebar } from "@/redux/slices/sidebarSlice";
+import { useRouter } from "next/navigation";
 
 const TagsSection = ({ onClose }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const tags = useSelector((state) => state.project.tags) || [];
+  const ProjectData = useSelector((state) => state.project);
   const [tagInput, setTagInput] = useState("");
 
   const handleAddTag = (e) => {
@@ -23,6 +29,90 @@ const TagsSection = ({ onClose }) => {
 
   const formatTag = (input) => {
     return input.replace(/#/g, "").trim(); // remove all `#` symbols
+  };
+
+  function base64ToFile(base64, filename) {
+    const arr = base64.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  const handleSubmit = async () => {
+    if (!ProjectData.title?.trim()) {
+      return toast.error("Title is required.");
+    }
+
+    if (!ProjectData.description?.trim()) {
+      return toast.error("Description is required.");
+    }
+
+    if (!ProjectData.image) {
+      return toast.error("Thumbnail image is required.");
+    }
+
+    if (!Array.isArray(ProjectData.skills) || ProjectData.skills.length === 0) {
+      return toast.error("Please add at least one skill.");
+    }
+
+    if (!Array.isArray(ProjectData.tags) || ProjectData.tags.length === 0) {
+      return toast.error("Please add at least one tag.");
+    }
+
+    if (
+      !Array.isArray(ProjectData.categories) ||
+      ProjectData.categories.length === 0
+    ) {
+      return toast.error("Please select at least one category.");
+    }
+    const toastId = toast.loading("Creating project...");
+    const imageFile = base64ToFile(ProjectData.image, "upload.png");
+
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(ProjectData)) {
+      if (key === "image") continue;
+
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          formData.append(`${key}[]`, item); // Send as key[]
+        });
+      } else if (typeof value === "object" && value !== null) {
+        formData.append(key, JSON.stringify(value));
+      } else {
+        formData.append(key, value);
+      }
+    }
+
+    formData.append("thumbnail", imageFile);
+
+    try {
+      const response = await axiosInstance.post("/api/projects", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("response", response.data);
+      if (response.data.success) {
+        dispatch(toggleSidebar());
+        toast.success("Project created! View it in your profile.", {
+          id: toastId,
+        });
+        router.push("/profile");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to add project.", {
+        id: toastId,
+      });
+    }
   };
 
   return (
@@ -70,7 +160,7 @@ const TagsSection = ({ onClose }) => {
           </div>
 
           <button
-            // onClick={onSubmit} it will be completed when backend will be connected
+            onClick={handleSubmit}
             className="bg-[#5446BC] text-white px-4 py-2 rounded-md hover:bg-[#4a3ea8] transition-colors self-end"
           >
             I’m Ready
