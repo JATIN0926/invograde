@@ -39,7 +39,7 @@ const MyProjects = () => {
       ) : projects.length === 0 ? (
         <p>No projects found.</p>
       ) : (
-        <div className="w-full flex flex-wrap items-center justify-between gap-3">
+        <div className="w-full flex flex-wrap items-center justify-start gap-10">
           {projects.map((project) => (
             <MyProjectCard key={project._id} project={project} />
           ))}
