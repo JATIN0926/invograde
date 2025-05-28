@@ -82,7 +82,7 @@ const TagsSection = ({ onClose }) => {
 
       if (Array.isArray(value)) {
         value.forEach((item) => {
-          formData.append(`${key}[]`, item); // Send as key[]
+          formData.append(`${key}[]`, item);
         });
       } else if (typeof value === "object" && value !== null) {
         formData.append(key, JSON.stringify(value));
