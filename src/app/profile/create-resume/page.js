@@ -1,4 +1,6 @@
+"use client"
 import CreateResume from '@/components/ProfilePage/CreateResume/CreateResume'
+import withAuth from '@/components/withAuth/withAuth';
 import React from 'react'
 
 const page = () => {
@@ -7,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default withAuth(page);

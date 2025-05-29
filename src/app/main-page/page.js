@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ProjectsArea from '@/components/main-page/ProjectsArea/ProjectsArea';
+import withAuth from "@/components/withAuth/withAuth";
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,4 +13,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);

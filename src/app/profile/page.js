@@ -1,5 +1,6 @@
 "use client"
 import ProfilePage from "@/components/ProfilePage/ProfilePage/ProfilePage";
+import withAuth from "@/components/withAuth/withAuth";
 import { useState } from "react";
 
 const Page = () => {
@@ -11,4 +12,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);
