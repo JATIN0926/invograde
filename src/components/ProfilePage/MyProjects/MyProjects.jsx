@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import MyProjectCard from "./MyProjectCard";
 import axiosInstance from "@/utils/axiosInstance";
@@ -9,6 +8,7 @@ import axiosInstance from "@/utils/axiosInstance";
 const MyProjects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const hasFetchedRef = useRef(false);
 
   const fetchProjects = async () => {
     try {
@@ -27,17 +27,22 @@ const MyProjects = () => {
   };
 
   useEffect(() => {
-    fetchProjects();
+    if (!hasFetchedRef.current) {
+      hasFetchedRef.current = true;
+      fetchProjects();
+    }
   }, []);
 
   return (
     <div className="flex flex-col items-start justify-center gap-6">
-      <h1 className="font-PublicSans-Regular text-base">My Projects</h1>
+      <h1 className="font-PublicSans-Regular text-xl font-semibold">
+        My Projects
+      </h1>
 
       {loading ? (
         <p>Loading...</p>
       ) : projects.length === 0 ? (
-        <p>No projects found.</p>
+        <p className="text-lg text-center ">No projects found.</p>
       ) : (
         <div className="w-full flex flex-wrap items-center justify-start gap-10">
           {projects.map((project) => (
