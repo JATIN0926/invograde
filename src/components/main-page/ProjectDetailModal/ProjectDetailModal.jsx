@@ -5,14 +5,20 @@ import Image from "next/image";
 import ProjectCard from "../ProjectCard/ProjectCard";
 
 const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
-  // ✅ Prevent body from scrolling when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+  if (!projectData) return null;
 
+  const {
+    title,
+    description,
+    thumbnail,
+    createdAt,
+    likes = [],
+    tags = [],
+    userId,
+  } = projectData;
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -37,28 +43,30 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
                 <div className="flex items-start justify-center gap-4 text-[#3A3084]">
                   <div className="w-12 h-10 relative">
                     <Image
-                      src="/images/ProfileAvatar.png"
+                      src={userId?.avatar || "/images/ProfileAvatar.png"}
                       alt="Profile"
                       fill
                       style={{ objectFit: "cover" }}
                     />
                   </div>
                   <div className="flex flex-col items-start justify-center gap-2">
-                    <h1 className="text-2xl">Louis Montana -</h1>
+                    <h1 className="text-2xl">
+                      {userId?.username|| "Unknown User"}{" "}
+                    </h1>
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-5 h-5 relative">
                         <Image src="/icons/heart_like.png" alt="like" fill />
                       </div>
-                      <h1 className="text-[0.8rem] text-black">79</h1>
+                      <h1 className="text-[0.8rem] text-black">
+                        {likes.length}
+                      </h1>
                     </div>
                   </div>
-                  <p className="text-lg ml-6 mt-1">
-                    ZaRa UI/UX Branding | Landing Page
-                  </p>
+                  <p className="text-lg ml-6 mt-1">{title}</p>
                 </div>
                 <div className="flex gap-4 items-center self-start">
                   <h2 className="text-black text-lg">
-                    Published: November 11, 2024
+                    Published: {new Date(createdAt).toLocaleDateString()}
                   </h2>
                   <button
                     className="text-gray-400 hover:text-gray-600 text-xl"
@@ -76,7 +84,7 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
 
               <div className="w-full relative rounded-md aspect-video mb-6">
                 <Image
-                  src="/images/ProjectCardPlaceholder.png"
+                  src={thumbnail || "/images/ProjectCardPlaceholder.png"}
                   alt="img"
                   fill
                   className="rounded-md object-cover"
@@ -89,13 +97,7 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
                     <Image src="/icons/heart_like.png" alt="like" fill />
                   </div>
                   <p className="text-xl text-[#141520] font-PublicSans-Regular">
-                    Trying to design a modern, user-friendly website for a salon
-                    and beauty parlor that offers both home services and
-                    in-salon experiences. The aim was to create a smooth and
-                    easy-to-use platform where clients can easily book their
-                    favorite treatments from the comfort of their homes or in
-                    the salon. My focus was on making the design clean, highly
-                    functional, and visually appealing.
+                    {description}
                   </p>
                 </div>
                 <div className="flex items-start justify-center gap-4 w-[90%]">
@@ -103,14 +105,9 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
                     <Image src="/icons/heart_like.png" alt="like" fill />
                   </div>
                   <div className="text-base text-[#141520] font-PublicSans-Medium flex items-center justify-evenly w-full">
-                    <p>Wireframing </p>
-                    <p>Prototyping </p>
-                    <p>Figma </p>
-                    <p>User experience</p>
-                    <p>User interface</p>
-                    <p>Adobe xd</p>
-                    <p>Designing</p>
-                    <p>Project management</p>
+                    {tags.map((tag, i) => (
+                      <p key={i}>{tag}</p>
+                    ))}
                   </div>
                 </div>
                 <button className="text-base text-[#141520] font-PublicSans-Medium underline">
@@ -119,9 +116,9 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
               </div>
 
               <div className="w-[90%] flex items-center justify-between flex-wrap self-center mt-6">
-                <ProjectCard />
-                <ProjectCard />
-                <ProjectCard />
+                {/* <ProjectCard data={projectData} />
+                  <ProjectCard data={projectData} />
+                  <ProjectCard data={projectData} /> */}
               </div>
             </div>
           </motion.div>
