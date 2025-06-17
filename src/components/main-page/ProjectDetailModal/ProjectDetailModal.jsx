@@ -5,6 +5,13 @@ import Image from "next/image";
 import ProjectCard from "../ProjectCard/ProjectCard";
 
 const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!projectData) return null;
 
   const {
@@ -16,13 +23,6 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
     tags = [],
     userId,
   } = projectData;
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -51,7 +51,7 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
                   </div>
                   <div className="flex flex-col items-start justify-center gap-2">
                     <h1 className="text-2xl">
-                      {userId?.username|| "Unknown User"}{" "}
+                      {userId?.username || "Unknown User"}{" "}
                     </h1>
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-5 h-5 relative">
