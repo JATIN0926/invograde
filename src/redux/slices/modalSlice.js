@@ -20,6 +20,9 @@ const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
+    setResumeData(state, action) {
+      state.data = action.payload;
+    },
     openSkillsModal(state) {
       state.modals.skillsModalOpen = true;
     },
@@ -104,6 +107,7 @@ export const {
   removeWorkExperience,
   addCertification,
   removeCertification,
+  setResumeData,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -1,16 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addEducation,
-  closeEducationModal,
-} from "@/redux/slices/modalSlice";
+import { addEducation, closeEducationModal } from "@/redux/slices/modalSlice";
 
 const AddEducationModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector(
-    (state) => state.modal.modals.educationModalOpen
-  );
+  const isOpen = useSelector((state) => state.modal.modals.educationModalOpen);
 
   const [educationLevel, setEducationLevel] = useState("");
   const [fieldOfStudy, setFieldOfStudy] = useState("");
@@ -20,8 +15,7 @@ const AddEducationModal = () => {
   const handleSave = (addAnother = false) => {
     if (educationLevel.trim()) {
       const newEducation = {
-        id: Date.now(),
-        educationLevel,
+        degree: educationLevel,
         fieldOfStudy,
       };
 

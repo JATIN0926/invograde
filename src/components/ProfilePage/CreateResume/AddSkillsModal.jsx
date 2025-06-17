@@ -15,7 +15,7 @@ const AddSkillsModal = () => {
     if (skill.trim()) {
       const newSkill = {
         name: skill,
-        experience: experience ? parseInt(experience) : null,
+        yearsOfExperience: experience ? parseInt(experience) : null,
       };
 
       dispatch(addSkill(newSkill));

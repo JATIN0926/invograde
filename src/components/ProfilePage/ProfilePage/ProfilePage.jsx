@@ -13,11 +13,11 @@ const ProfilePage = ({ isOpen }) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  // Form values
   const [username, setUsername] = useState("");
   const [careerType, setCareerType] = useState("");
   const [gender, setGender] = useState("");
   const [isStudent, setIsStudent] = useState("");
+  const [resumeData, setResumeData] = useState(user?.resume || null);
 
   const fetchUser = async () => {
     try {
@@ -30,6 +30,7 @@ const ProfilePage = ({ isOpen }) => {
         setCareerType(u.careerType || "");
         setGender(u.gender || "");
         setIsStudent(u.isStudent || "");
+        setResumeData(u.resume || null);
       } else {
         toast.error(res.data.message);
       }
@@ -40,10 +41,75 @@ const ProfilePage = ({ isOpen }) => {
 
   useEffect(() => {
     fetchUser();
-  });
+  }, []);
 
   const handleFileUploadClick = () => {
     fileInputRef.current.click();
+  };
+
+  const handleSaveOrEdit = async () => {
+    if (isEditing) {
+      const toastId = toast.loading("Updating profile...");
+
+      try {
+        const payload = {
+          fullName: username,
+          specialization: careerType,
+          gender,
+          isStudent,
+        };
+
+        const res = await axiosInstance.put("/api/profile", payload);
+
+        if (res.data.success) {
+          toast.success("Profile updated successfully", { id: toastId });
+          dispatch(setUser(res.data.data));
+        } else {
+          toast.error(res.data.message || "Update failed", { id: toastId });
+        }
+      } catch (err) {
+        toast.error("Something went wrong. Please try again.", { id: toastId });
+      }
+    }
+
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log("file", file);
+    if (!file) return;
+
+    const toastId = toast.loading("Uploading resume...");
+
+    try {
+      const formData = new FormData();
+      formData.append("resume", file);
+
+      const res = await axiosInstance.post(
+        "/api/profile/upload/resume",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("res", res.data);
+
+      if (res.data.success) {
+        toast.success("Resume uploaded successfully", { id: toastId });
+        setResumeData(res.data.data.resume);
+        dispatch(
+          setUser((prev) => ({ ...prev, resume: res.data.data.resume }))
+        );
+      } else {
+        toast.error(res.data.message || "Upload failed", { id: toastId });
+      }
+    } catch (err) {
+      toast.error("Error uploading resume", { id: toastId });
+    }
   };
 
   return (
@@ -71,7 +137,7 @@ const ProfilePage = ({ isOpen }) => {
             </div>
           </div>
           <button
-            onClick={() => setIsEditing((prev) => !prev)}
+            onClick={handleSaveOrEdit}
             className="bg-[#774FCC] px-8 p-2 text-white font-PublicSans-Light text-[0.87rem] flex items-center gap-2 rounded-lg"
           >
             <p>{isEditing ? "Save" : "Edit"}</p>
@@ -153,28 +219,57 @@ const ProfilePage = ({ isOpen }) => {
           <h2 className="text-gray-800 text-[0.9rem] font-PublicSans-Regular">
             My Resume
           </h2>
-          <div
-            className="border-[#774FCC] bg-[#F9F9F9] p-6 rounded-lg flex flex-col items-center justify-center gap-3 cursor-pointer text-center font-PublicSans-Regular border-2 border-dashed"
-            onClick={handleFileUploadClick}
-          >
-            <div className="relative h-7 w-7">
-              <Image src="/icons/file_icon.png" alt="Upload Icon" fill />
+          {resumeData ? (
+            <div className="border-[#774FCC] bg-[#F9F9F9] p-6 rounded-lg flex flex-col items-center justify-center gap-3 text-center font-PublicSans-Regular border-2 border-dashed">
+              <div className="text-5xl text-[#774FCC]">
+                📄{" "}
+                {/* or use react-icons like <FiFileText /> from react-icons/fi */}
+              </div>
+              <p className="text-gray-800 text-[0.9rem]">
+                {resumeData.filename}
+              </p>
+              <a
+                href={resumeData.s3Url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#5446BC] text-sm underline"
+              >
+                View / Download
+              </a>
             </div>
-            <p className="text-[0.9rem]">
-              <span className="text-[#5446BC]">Click to upload</span> or Drag &
-              Drop
+          ) : (
+            <div
+              className="border-[#774FCC] bg-[#F9F9F9] p-6 rounded-lg flex flex-col items-center justify-center gap-3 cursor-pointer text-center font-PublicSans-Regular border-2 border-dashed"
+              onClick={handleFileUploadClick}
+            >
+              <div className="relative h-7 w-7">
+                <Image src="/icons/file_icon.png" alt="Upload Icon" fill />
+              </div>
+              <p className="text-[0.9rem]">
+                <span className="text-[#5446BC]">Click to upload</span> or Drag
+                & Drop
+              </p>
+              <p className="text-gray-400 text-[0.9rem]">
+                PDF, DOC, or DOCX (max 5MB)
+              </p>
+            </div>
+          )}
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleResumeUpload}
+          />
+
+          {!resumeData && (
+            <p className="text-black text-[0.9rem] font-PublicSans-Regular text-center">
+              Don’t have a PDF file?{" "}
+              <span className="text-[#5446BC] cursor-pointer hover:underline">
+                <a href="/profile/create-resume">Create Resume</a>
+              </span>
             </p>
-            <p className="text-gray-400 text-[0.9rem]">
-              SVG, PNG, JPG or GIF (max. 300x300px)
-            </p>
-          </div>
-          <input type="file" ref={fileInputRef} className="hidden" />
-          <p className="text-black text-[0.9rem] font-PublicSans-Regular text-center">
-            Don’t have a PDF file?{" "}
-            <span className="text-[#5446BC] cursor-pointer hover:underline">
-              <a href="/profile/create-resume">Create Resume</a>
-            </span>
-          </p>
+          )}
         </div>
       </div>
 

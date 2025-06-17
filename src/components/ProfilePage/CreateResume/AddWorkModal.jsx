@@ -15,7 +15,7 @@ const AddWorkModal = ({ isOpen, onClose }) => {
     dispatch(
       addWorkExperience({
         jobTitle,
-        companyName,
+        company: companyName,
       })
     );
     setJobTitle("");

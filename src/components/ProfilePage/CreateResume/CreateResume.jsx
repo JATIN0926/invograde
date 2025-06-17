@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddSkillsModal from "./AddSkillsModal";
 import AddEducationModal from "./AddEducationModal";
 import AddWorkModal from "./AddWorkModal";
@@ -13,7 +13,10 @@ import {
   removeEducation,
   removeSkill,
   removeWorkExperience,
-} from "@/redux/slices/modalSlice"; // <-- Make sure removeSkill is defined in slice
+  setResumeData,
+} from "@/redux/slices/modalSlice";
+import toast from "react-hot-toast";
+import axiosInstance from "@/utils/axiosInstance";
 
 const CreateResume = () => {
   const [isSkillsOpen, setIsSkillsOpen] = useState(false);
@@ -24,19 +27,69 @@ const CreateResume = () => {
   const [isEditingEducation, setIsEditingEducation] = useState(false);
   const [isEditingWork, setIsEditingWork] = useState(false);
   const [isEditingCerts, setIsEditingCerts] = useState(false);
+  const [initialResumeData, setInitialResumeData] = useState(null);
 
   const dispatch = useDispatch();
-  const skills = useSelector((state) => state.modal.data?.skills || []);
-  const education = useSelector((state) => state.modal.data?.education || []);
-  const workExperience = useSelector(
-    (state) => state.modal.data?.workExperience || []
-  );
-  const certifications = useSelector(
-    (state) => state.modal.data?.certifications || []
-  );
+
+  const resumeData = useSelector((state) => state.modal.data);
+
+  useEffect(() => {
+    const fetchResumeData = async () => {
+      try {
+        const res = await axiosInstance.get("/api/profile/resume/get-sections");
+        dispatch(setResumeData(res.data));
+        setInitialResumeData(res.data);
+      } catch (error) {
+        console.error("Failed to fetch resume data:", error);
+        toast.error("Failed to fetch resume data");
+      }
+    };
+
+    fetchResumeData();
+  }, []);
+
+  const isDataChanged = () => {
+    if (!initialResumeData) return false;
+
+    const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+    return !(
+      isEqual(skills, initialResumeData.skills) &&
+      isEqual(education, initialResumeData.education) &&
+      isEqual(workExperience, initialResumeData.workExperience) &&
+      isEqual(certifications, initialResumeData.certifications)
+    );
+  };
+
+  const { skills, education, workExperience, certifications } = resumeData;
 
   const handleDeleteSkill = (index) => {
     dispatch(removeSkill(index));
+  };
+
+  const handleSaveChanges = async () => {
+    const payload = {
+      skills,
+      education,
+      workExperience,
+      certifications,
+    };
+
+    console.log(payload);
+
+    const toastId = toast.loading("Saving resume changes...");
+
+    try {
+      const res = await axiosInstance.post(
+        "/api/profile/resume/update-sections",
+        payload
+      );
+      toast.success("Resume updated successfully!", { id: toastId });
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update resume. Try again.", { id: toastId });
+    }
   };
 
   return (
@@ -83,7 +136,7 @@ const CreateResume = () => {
                     }}
                   >
                     <Image
-                      src="/icons/profile-edit.png" // <- your edit icon source here
+                      src="/icons/profile-edit.png"
                       alt="edit"
                       width={24}
                       height={24}
@@ -102,10 +155,10 @@ const CreateResume = () => {
                   >
                     <p className="text-black text-base font-PublicSans-Regular">
                       {skill.name}
-                      {skill.experience && (
+                      {skill.yearsOfExperience && (
                         <span className="text-[#717171] text-[0.9rem]">
-                          , {skill.experience} year
-                          {skill.experience > 1 ? "s" : ""}
+                          , {skill.yearsOfExperience} year
+                          {skill.yearsOfExperience > 1 ? "s" : ""}
                         </span>
                       )}
                     </p>
@@ -116,7 +169,7 @@ const CreateResume = () => {
                         onClick={() => handleDeleteSkill(idx)}
                       >
                         <Image
-                          src="/icons/profile-delete.png" // <- your delete icon source here
+                          src="/icons/profile-delete.png"
                           alt="delete"
                           width={20}
                           height={20}
@@ -172,7 +225,7 @@ const CreateResume = () => {
                     className="flex items-center justify-between mb-1"
                   >
                     <p className="text-black text-base font-PublicSans-Regular">
-                      {edu.educationLevel}{" "}
+                      {edu.degree}{" "}
                       {edu.fieldOfStudy && (
                         <span className="text-[#717171]">
                           - {edu.fieldOfStudy}
@@ -245,10 +298,8 @@ const CreateResume = () => {
                   >
                     <p className="text-black text-base font-PublicSans-Regular">
                       {exp.jobTitle}{" "}
-                      {exp.companyName && (
-                        <span className="text-[#717171]">
-                          at {exp.companyName}
-                        </span>
+                      {exp.company && (
+                        <span className="text-[#717171]"> , {exp.company}</span>
                       )}
                     </p>
 
@@ -350,6 +401,18 @@ const CreateResume = () => {
           </div>
         </div>
       </div>
+
+      <button
+        onClick={handleSaveChanges}
+        disabled={!isDataChanged()}
+        className={`mt-6 self-center px-6 py-3 rounded-lg transition ${
+          isDataChanged()
+            ? "bg-[#5446BC] text-white hover:bg-[#4237a5]"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        }`}
+      >
+        Save Changes
+      </button>
 
       {/* Modals */}
       <AddSkillsModal
