@@ -6,7 +6,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/slices/userSlice";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -14,6 +14,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.user.user);
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/";
 
   const imgs = [
     "/icons/google.png",
@@ -36,7 +38,7 @@ const Login = () => {
           dispatch(setUser(response.data.user));
         }
 
-        router.push("/");
+        router.push(redirectPath);
       } else {
         toast.error(response.data.message || "Login failed", { id: loading });
       }
