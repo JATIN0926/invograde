@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/slices/userSlice";
 import { toast } from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/firebase.js";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -16,13 +18,6 @@ const Login = () => {
   const user = useSelector((state) => state.user.user);
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/";
-
-  const imgs = [
-    "/icons/google.png",
-    "/icons/twitter.png",
-    "/icons/facebook.png",
-    "/icons/linkedin.png",
-  ];
 
   const handleSubmit = async () => {
     const loading = toast.loading("Logging in...");
@@ -48,6 +43,41 @@ const Login = () => {
         error.response?.data?.message || "Something went wrong during login",
         { id: loading }
       );
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const loading = toast.loading("Logging in with Google...");
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const googleUser = result.user;
+
+      const googleData = {
+        name: googleUser.displayName,
+        email: googleUser.email,
+        photoURL: googleUser.photoURL,
+      };
+
+      const res = await axiosInstance.post(
+        "/api/auth/google-login",
+        googleData
+      );
+
+      if (res.data.success) {
+        toast.success("Google login successful!", { id: loading });
+
+        if (!user) {
+          dispatch(setUser(res.data.user));
+        }
+
+        console.log("redirect", redirectPath);
+        router.push(redirectPath);
+      } else {
+        toast.error(res.data.message || "Google login failed", { id: loading });
+      }
+    } catch (error) {
+      console.error("Google sign-in error", error);
+      toast.error("Google login failed.", { id: loading });
     }
   };
 
@@ -103,10 +133,11 @@ const Login = () => {
             <p className=" text-[#787878] text-[0.82rem]">
               Login using a social account
             </p>
-            <div className="flex items-center justify-between w-full cursor-pointer">
-              {imgs.map((img, i) => (
-                <Image key={i} src={img} alt="img" width={30} height={30} />
-              ))}
+            <div
+              className="flex items-center justify-center w-full cursor-pointer"
+              onClick={handleGoogleLogin}
+            >
+              <Image src="/icons/google.png" alt="img" width={30} height={30} />
             </div>
             <button
               className="bg-[#3A3084] p-2 px-8 text-base rounded-md text-white font-semibold"
