@@ -39,7 +39,6 @@ const MyProjects = () => {
     try {
       const res = await axiosInstance.get(`/api/projects/${projectData._id}`);
 
-      console.log("res", res.data);
       if (res.data.success) {
         setSelectedProject(res.data.project);
       } else {
