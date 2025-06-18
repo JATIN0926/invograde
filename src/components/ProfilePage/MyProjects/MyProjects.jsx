@@ -4,10 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import MyProjectCard from "./MyProjectCard";
 import axiosInstance from "@/utils/axiosInstance";
+import ProjectDetailModal from "@/components/main-page/ProjectDetailModal/ProjectDetailModal";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
   const hasFetchedRef = useRef(false);
 
   const fetchProjects = async () => {
@@ -33,6 +35,28 @@ const MyProjects = () => {
     }
   }, []);
 
+  const openModal = async (projectData) => {
+    try {
+      const res = await axiosInstance.get(`/api/projects/${projectData._id}`);
+
+      console.log("res", res.data);
+      if (res.data.success) {
+        setSelectedProject(res.data.project);
+      } else {
+        toast.error("Could not fetch project details.");
+      }
+    } catch (err) {
+      console.error("Error fetching detailed project:", err);
+      toast.error("Failed to load project details.");
+    }
+  };
+
+  const closeModal = () => {
+    setTimeout(() => {
+      setSelectedProject(null);
+    }, 400);
+  };
+
   return (
     <div className="flex flex-col items-start justify-center gap-6">
       <h1 className="font-PublicSans-Regular text-xl font-semibold">
@@ -46,9 +70,21 @@ const MyProjects = () => {
       ) : (
         <div className="w-full flex flex-wrap items-center justify-start gap-10">
           {projects.map((project) => (
-            <MyProjectCard key={project._id} project={project} />
+            <MyProjectCard
+              key={project._id}
+              project={project}
+              onClick={() => openModal(project)}
+            />
           ))}
         </div>
+      )}
+
+      {selectedProject && (
+        <ProjectDetailModal
+          isOpen={!!selectedProject}
+          onClose={closeModal}
+          projectData={selectedProject}
+        />
       )}
     </div>
   );

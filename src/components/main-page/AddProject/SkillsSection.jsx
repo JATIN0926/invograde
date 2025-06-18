@@ -67,8 +67,8 @@ const SkillsSection = ({ skills, onSkillsChange, onNext, onClose }) => {
             ))}
           </div>
 
-          <div className=" w-full  flex items-center justify-between ">
-            <div className="flex items-center space-x-2 pt-4">
+          <div className=" w-full  flex items-center justify-end ">
+            {/* <div className="flex items-center space-x-2 pt-4">
               <input
                 type="checkbox"
                 className="w-4 h-4 text-[#5446BC] border-gray-300 rounded focus:ring-[#5446BC]"
@@ -76,7 +76,7 @@ const SkillsSection = ({ skills, onSkillsChange, onNext, onClose }) => {
               <label className="text-lg text-[#3A3084]">
                 Add these skills to my resume
               </label>
-            </div>
+            </div> */}
 
             <button
               onClick={onNext}

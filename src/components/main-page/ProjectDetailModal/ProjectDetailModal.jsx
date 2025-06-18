@@ -24,6 +24,8 @@ const ProjectDetailModal = ({ isOpen, onClose, projectData }) => {
     userId,
   } = projectData;
 
+  console.log("data", projectData);
+
   return (
     <AnimatePresence>
       {isOpen && (
