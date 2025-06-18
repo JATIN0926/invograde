@@ -1,11 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import axiosInstance from "@/utils/axiosInstance";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/slices/userSlice";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/firebase.js";
 
 const CustomSelect = ({ options, selected, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,12 +51,10 @@ const SignUp = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
-  const imgs = [
-    "/icons/google.png",
-    "/icons/twitter.png",
-    "/icons/facebook.png",
-    "/icons/linkedin.png",
-  ];
+  const user = useSelector((state) => state.user.user);
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/";
+  const imgs = [""];
   const [formData, setFormData] = useState({
     emailOrPhone: "",
     password: "",
@@ -115,6 +115,40 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleGoogleLogin = async () => {
+    const loading = toast.loading("Logging in with Google...");
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const googleUser = result.user;
+
+      const googleData = {
+        name: googleUser.displayName,
+        email: googleUser.email,
+        photoURL: googleUser.photoURL,
+      };
+
+      const res = await axiosInstance.post(
+        "/api/auth/google-login",
+        googleData
+      );
+
+      if (res.data.success) {
+        toast.success("Google login successful!", { id: loading });
+
+        if (!user) {
+          dispatch(setUser(res.data.user));
+        }
+
+        router.push(redirectPath);
+      } else {
+        toast.error(res.data.message || "Google login failed", { id: loading });
+      }
+    } catch (error) {
+      console.error("Google sign-in error", error);
+      toast.error("Google login failed.", { id: loading });
+    }
   };
 
   return (
@@ -215,10 +249,11 @@ const SignUp = () => {
             <p className="text-[#787878] text-[0.82rem]">
               Login using a social account
             </p>
-            <div className="flex items-center justify-between w-full cursor-pointer">
-              {imgs.map((img, i) => (
-                <Image key={i} src={img} alt="img" width={30} height={30} />
-              ))}
+            <div
+              className="flex items-center justify-center w-full cursor-pointer"
+              onClick={handleGoogleLogin}
+            >
+              <Image src="/icons/google.png" alt="img" width={30} height={30} />
             </div>
           </div>
           <button

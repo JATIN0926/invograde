@@ -70,7 +70,6 @@ const Login = () => {
           dispatch(setUser(res.data.user));
         }
 
-        console.log("redirect", redirectPath);
         router.push(redirectPath);
       } else {
         toast.error(res.data.message || "Google login failed", { id: loading });
