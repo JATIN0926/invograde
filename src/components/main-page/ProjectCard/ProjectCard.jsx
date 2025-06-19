@@ -1,8 +1,42 @@
+import { toggleProjectLike } from "@/utils/api/projectApi";
+import axiosInstance from "@/utils/axiosInstance";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const ProjectCard = ({ key, data, onClick, isSelected }) => {
-  const { title, thumbnail, userId, likes } = data;
+  const {
+    _id,
+    title,
+    thumbnail,
+    userId,
+    likes: initialLikes,
+    likedByCurrentUser,
+  } = data;
+
+  const [likes, setLikes] = useState(initialLikes || 0);
+  const [liked, setLiked] = useState(likedByCurrentUser || false);
+  const [loading, setLoading] = useState(false);
+
+  const handleLikeToggle = async (e) => {
+    e.stopPropagation();
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const { liked: nowLiked, likes: updatedLikes } = await toggleProjectLike(
+        _id
+      );
+
+      setLiked(nowLiked);
+      setLikes(updatedLikes);
+    } catch (err) {
+      console.error("Like toggle failed", err);
+      toast.error("Failed to update like");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -31,11 +65,14 @@ const ProjectCard = ({ key, data, onClick, isSelected }) => {
           </div>
           <h1 className="text-[#3A3084] text-[0.9rem]">{userId?.username}</h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={handleLikeToggle}
+        >
           <div className="w-5 h-5 relative">
             <Image src="/icons/Like.png" alt="like" fill />
           </div>
-          <h1 className="text-[0.8rem] text-black">{likes || 0}</h1>
+          <h1 className="text-[0.8rem] text-black">{likes}</h1>
         </div>
       </div>
     </div>
