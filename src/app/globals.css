@@ -98,6 +98,24 @@
     src: url('../Fonts/PublicSans-Thin.ttf') format('opentype');
     font-style: normal;
 }
+@font-face {
+    font-family: 'Outfit Medium';
+    src: url('../Fonts/Outfit-Medium.ttf') format('opentype');
+    font-style: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Outfit Regular';
+    src: url('../Fonts/Outfit-Regular.ttf') format('opentype');
+    font-style: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Outfit SemiBold';
+    src: url('../Fonts/Outfit-SemiBold.ttf') format('opentype');
+    font-style: 400;
+    font-style: normal;
+}
 
   ::-webkit-scrollbar{
     display: none;

@@ -5,116 +5,58 @@ import "./hero.css";
 import Navbar from "../Navbar/Navbar";
 import Link from "next/link";
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(null);
-  const itemsRef = useRef([]);
-  const thumbnailsRef = useRef([]);
-  const timeAutoNext = 5000;
-
-  const videos = [
-    {
-      src: "/images/hero1.png",
-      title: "Mountains",
-      location: "Nanda Devi, Karnataka",
-    },
-    {
-      src: "/images/hero2.png",
-      title: "Wildlife",
-      location: "Jim Corbett, Uttrakhand",
-    },
-    {
-      src: "/images/hero3.png",
-      title: "Yoga and Culture",
-      location: "Rishikesh, Haridwar",
-    },
-  ];
-
-  useEffect(() => {
-    let interval;
-    interval = setInterval(() => {
-      handleSelect((currentIndex + 1) % videos.length);
-    }, timeAutoNext);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]); // Reset interval when currentIndex or isZoomingAnimationComplete changes
-
-  const handleSelect = (index) => {
-    if (index === currentIndex) return;
-
-    itemsRef.current[index].classList.add("fade-in");
-    itemsRef.current[currentIndex].classList.add("fade-out");
-    setNextIndex(index);
-    setTimeout(() => {
-      setCurrentIndex(index);
-      setNextIndex(null);
-      itemsRef.current[index].classList.remove("fade-in");
-      itemsRef.current[currentIndex].classList.remove("fade-out");
-    }, 1000);
-  };
-
-  useEffect(() => {
-    itemsRef.current = itemsRef.current.slice(0, videos.length);
-    thumbnailsRef.current = thumbnailsRef.current.slice(0, videos.length);
-  }, [videos]);
-
   return (
-    <div className="carousel">
-      <Navbar />
-      <div className="list relative">
-        {videos.map((item, index) => (
-          <div
-            key={index}
-            className={`item ${index === currentIndex ? "active" : ""} ${
-              index === nextIndex ? "entering" : ""
-            }`}
-            ref={(el) => (itemsRef.current[index] = el)}
-          >
-            <div
-              className={`overlay ${index === nextIndex ? "entering" : ""}`}
-            ></div>
-            <Image
-              src={item.src}
-              width={200}
-              height={200}
-              className="object-cover w-full h-full"
-              alt="img"
-            />
-            <div className=" content h-full px-20 z-[3]">
-              <div className="flex items-center justify-between w-full h-full mt-10 ">
-                <div className="flex flex-col items-start justify-start gap-12 w-[58%] h-[70%]">
-                  <div className=" flex flex-col items-start justify-center gap-4">
-                    <h2 className=" text-xl font-IBMPlexSans-Regular font-medium">
-                      Start monetizing your skills
-                    </h2>
-                    <h1 className=" text-5xl font-IBMPlexSans-Bold font-semibold w-[95%]">
-                      Discover the Talent & Shape the Future with Us.
-                    </h1>
-                  </div>
-                  <p className=" text-2xl font-IBMPlexSans-Regular font-semibold">
-                    Join us today and embark on the path to unleashing your full
-                    potential.
-                  </p>
-                  <div className="flex flex-col items-start justify-center">
-                    <h1 className=" font-IBMPlexSans-Bold text-[2.7rem]">
-                      <span className="text-black">DEV</span>ELOPER
-                    </h1>
-                    <h1 className=" font-IBMPlexSans-Bold text-6xl test text-transparent">
-                      DESIGNER
-                    </h1>
-                  </div>
-                </div>
-                <div className="h-[30%] flex items-end">
-                  <Link href={`/main-page`}>
-                    <button className="relative overflow-hidden group bg-[#3A3084] rounded-full p-4 px-16 font-semibold">
-                      <div className="absolute top-1/2 left-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5446BC] transition-all duration-500 group-hover:scale-[7] group-hover:opacity-100 opacity-0 z-10"></div>
-                      <h1 className="relative z-20">Get Started</h1>
-                    </button>
-                  </Link>
-                </div>
-              </div>
+    <div className="w-full min-h-dvh bg-gradient-to-b from-[#190D42] via-[#4F34C7] to-[#BAB9F8] rounded-3xl py-6 flex flex-col items-center justify-center gap-10">
+      <div className="relative w-[15rem] aspect-square">
+        <Image
+          src="/images/hero2.png"
+          alt="hero-img"
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      <div className="flex items-center justify-between w-full px-6 ">
+        <div className="relative w-[21rem] aspect-square mt-20">
+          <Image
+            src="/images/hero3.png"
+            alt="hero-img"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-3">
+            <h2 className="bg-gradient-to-r from-[#FFFFFF] to-[#FFFFFF99] bg-clip-text text-transparent font-Outfit-SemiBold text-[1.1rem] tracking-[-0.44px]">
+              Introducing
+            </h2>
+            <div className="relative w-8 h-8">
+              <Image
+                src="/icons/InvogradeIcon.png"
+                alt="InvogradeIcon"
+                fill
+                className="object-cover"
+              />
             </div>
+            <h2 className="text-white font-Outfit-SemiBold tracking-[-0.48px] text-[1.2rem]">
+              Invograde
+            </h2>
           </div>
-        ))}
+          <p className="font-Outfit-Regular text-5xl leading-[3rem] tracking-[-1.3px] text-white w-[70%] text-center">
+            Your Work Deserves More Than a Resume. Show It. Share It. Get Hired
+          </p>
+          <button className="bg-white mt-6 px-4 py-1.5 cursor-pointer rounded-full text-[#333333] font-Outfit-Medium text-[0.7rem] uppercase tracking-[0.24px]">
+            Get Started
+          </button>
+        </div>
+        <div className="relative w-[21rem] aspect-square mb-20">
+          <Image
+            src="/images/hero4.png"
+            alt="hero-img"
+            fill
+            className="object-cover"
+          />
+        </div>
       </div>
     </div>
   );

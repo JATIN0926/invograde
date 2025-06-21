@@ -1,7 +1,8 @@
 const flowbite = require("flowbite-react/tailwind");
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
-const flattenColorPalette = require("tailwindcss/lib/util/flattenColorPalette").default;
+const flattenColorPalette =
+  require("tailwindcss/lib/util/flattenColorPalette").default;
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -30,6 +31,9 @@ module.exports = {
         "PublicSans-Regular": ["PublicSans Regular", "sans-serif"],
         "PublicSans-SemiBold": ["PublicSans SemiBold", "sans-serif"],
         "PublicSans-Thin": ["PublicSans Thin", "sans-serif"],
+        "Outfit-Medium": ["'Outfit Medium", "sans-serif"],
+        "Outfit-Regular": ["'Outfit Regular", "sans-serif"],
+        "Outfit-SemiBold": ["'Outfit SemiBold", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",
@@ -62,10 +66,7 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    addVariablesForColors,
-    flowbite.plugin(),
-  ],
+  plugins: [addVariablesForColors, flowbite.plugin()],
 };
 function addVariablesForColors({ addBase, theme }) {
   const allColors = flattenColorPalette(theme("colors"));
