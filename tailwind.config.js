@@ -31,9 +31,9 @@ module.exports = {
         "PublicSans-Regular": ["PublicSans Regular", "sans-serif"],
         "PublicSans-SemiBold": ["PublicSans SemiBold", "sans-serif"],
         "PublicSans-Thin": ["PublicSans Thin", "sans-serif"],
-        "Outfit-Medium": ["'Outfit Medium", "sans-serif"],
-        "Outfit-Regular": ["'Outfit Regular", "sans-serif"],
-        "Outfit-SemiBold": ["'Outfit SemiBold", "sans-serif"],
+        "Outfit-Medium": ["Outfit Medium", "sans-serif"],
+        "Outfit-Regular": ["Outfit Regular", "sans-serif"],
+        "Outfit-SemiBold": ["Outfit SemiBold", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",

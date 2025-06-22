@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import "./hero.css";
 import Navbar from "../Navbar/Navbar";
 import Link from "next/link";
 const Hero = () => {

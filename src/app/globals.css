@@ -101,19 +101,19 @@
 @font-face {
     font-family: 'Outfit Medium';
     src: url('../Fonts/Outfit-Medium.ttf') format('opentype');
-    font-style: 500;
+    font-weight: 500;
     font-style: normal;
 }
 @font-face {
     font-family: 'Outfit Regular';
     src: url('../Fonts/Outfit-Regular.ttf') format('opentype');
-    font-style: 400;
+    font-weight: 400;
     font-style: normal;
 }
 @font-face {
     font-family: 'Outfit SemiBold';
     src: url('../Fonts/Outfit-SemiBold.ttf') format('opentype');
-    font-style: 400;
+    font-weight: 400;
     font-style: normal;
 }
 
