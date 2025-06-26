@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import Link from "next/link";
 const Hero = () => {
   return (
-    <div className="w-full min-h-dvh bg-gradient-to-b from-[#190D42] via-[#4F34C7] to-[#BAB9F8] rounded-3xl py-6 flex flex-col items-center justify-center gap-10">
+    <div className="w-full min-h-dvh bg-[linear-gradient(to_bottom,rgba(25,13,66,0),#190D42,#4F34C7,#BAB9F8)] rounded-3xl py-6 flex flex-col items-center justify-center gap-10">
       <div className="relative w-[15rem] aspect-square">
         <Image
           src="/images/hero2.png"
@@ -44,9 +44,11 @@ const Hero = () => {
           <p className="font-Outfit-Regular text-5xl leading-[3rem] tracking-[-1.3px] text-white w-[70%] text-center">
             Your Work Deserves More Than a Resume. Show It. Share It. Get Hired
           </p>
-          <button className="bg-white mt-6 px-4 py-1.5 cursor-pointer rounded-full text-[#333333] font-Outfit-Medium text-[0.7rem] uppercase tracking-[0.24px]">
-            Get Started
-          </button>
+          <Link href="/main-page">
+            <button className="bg-white mt-6 px-5 py-2 cursor-pointer rounded-full text-[#333333] font-Outfit-Medium text-[0.6rem] uppercase tracking-[0.24px]">
+              Get Started
+            </button>
+          </Link>
         </div>
         <div className="relative w-[21rem] aspect-square mb-20">
           <Image
