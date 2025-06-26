@@ -1,5 +1,6 @@
 import ContactUs from "@/components/HomePage/ContactUs/ContactUs";
 import Description from "@/components/HomePage/Description/Description";
+import Footer from "@/components/HomePage/Footer/Footer";
 import GettingStarted from "@/components/HomePage/GettingStarted/GettingStarted";
 import Hero from "@/components/HomePage/Hero/Hero";
 import Navbar from "@/components/HomePage/Navbar/Navbar";
@@ -12,9 +13,10 @@ export default function Home() {
         <Navbar />
         <Hero />
         <Description />
-        <WhoIsThisFor />
+        {/* <WhoIsThisFor /> */}
         <GettingStarted />
-        <ContactUs />
+        {/* <ContactUs /> */}
+        <Footer />
       </main>
     </>
   );
