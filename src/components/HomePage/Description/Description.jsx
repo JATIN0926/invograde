@@ -146,6 +146,24 @@ const Description = () => {
           />
         </div>
       </div>
+      <div className="w-full overflow-x-auto">
+        <div className="flex gap-4">
+          {[1, 2, 3, 4, 5].map((item) => (
+            <div
+              key={item}
+              className="w-[40%] h-[15rem] rounded-3xl overflow-hidden flex-shrink-0 bg-gray-200"
+            >
+              <Image
+                src={`/images/carousel${item}.png`}
+                alt={`carousel-img-${item}`}
+                width={500}
+                height={300}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
