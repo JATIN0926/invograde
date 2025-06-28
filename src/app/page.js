@@ -1,9 +1,11 @@
 import ContactUs from "@/components/HomePage/ContactUs/ContactUs";
 import Description from "@/components/HomePage/Description/Description";
+import FAQ from "@/components/HomePage/FAQ/FAQ";
 import Footer from "@/components/HomePage/Footer/Footer";
 import GettingStarted from "@/components/HomePage/GettingStarted/GettingStarted";
 import Hero from "@/components/HomePage/Hero/Hero";
 import Navbar from "@/components/HomePage/Navbar/Navbar";
+import ReadyToShow from "@/components/HomePage/ReadyToShow/ReadyToShow";
 import WhoIsThisFor from "@/components/HomePage/WhoIsThisFor/WhoIsThisFor";
 
 export default function Home() {
@@ -13,9 +15,9 @@ export default function Home() {
         <Navbar />
         <Hero />
         <Description />
-        {/* <WhoIsThisFor /> */}
         <GettingStarted />
-        {/* <ContactUs /> */}
+        <FAQ />
+        <ReadyToShow />
         <Footer />
       </main>
     </>

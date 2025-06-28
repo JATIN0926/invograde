@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import Link from "next/link";
 const Hero = () => {
   return (
-    <div className="w-full min-h-dvh bg-[linear-gradient(to_bottom,rgba(25,13,66,0),#190D42,#4F34C7,#BAB9F8)] rounded-3xl py-6 flex flex-col items-center justify-center gap-10">
+    <div className="w-full min-h-dvh bg-gradient-to-b from-[#190D42] via-[#4F34C7] to-[#BAB9F8] rounded-3xl py-6 flex flex-col items-center justify-center gap-10">
       <div className="relative w-[15rem] aspect-square">
         <Image
           src="/images/hero2.png"
