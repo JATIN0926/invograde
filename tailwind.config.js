@@ -34,6 +34,10 @@ module.exports = {
         "Outfit-Medium": ["Outfit Medium", "sans-serif"],
         "Outfit-Regular": ["Outfit Regular", "sans-serif"],
         "Outfit-SemiBold": ["Outfit SemiBold", "sans-serif"],
+        "Geist-Light": ["Geist Light", "sans-serif"],
+        "Geist-Regular": ["Geist Regular", "sans-serif"],
+        "Geist-Medium": ["Geist Medium", "sans-serif"],
+        "Geist-SemiBold": ["Geist SemiBold", "sans-serif"],
       },
       backgroundImage: {
         "login-bg": "url('/images/login_bg.png')",

@@ -105,10 +105,10 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'Outfit Regular';
-    src: url('../Fonts/Outfit-Regular.ttf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Outfit Regular';
+  src: url('../Fonts/Outfit-Regular.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
 @font-face {
     font-family: 'Outfit SemiBold';
@@ -117,6 +117,31 @@
     font-style: normal;
 }
 
+  @font-face {
+      font-family: 'Geist Light';
+      src: url('../Fonts/Geist-Light.ttf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+  }
+  @font-face {
+    font-family: 'Geist Regular';
+    src: url('../Fonts/Geist-Regular.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Geist Medium';
+    src: url('../Fonts/Geist-Medium.ttf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Geist SemiBold';
+    src: url('../Fonts/Geist-SemiBold.ttf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+  }
+ 
   ::-webkit-scrollbar{
     display: none;
   }
