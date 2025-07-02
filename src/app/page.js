@@ -1,4 +1,4 @@
-
+import Community from "@/components/HomePage/Community/Community";
 import Description from "@/components/HomePage/Description/Description";
 import FAQ from "@/components/HomePage/FAQ/FAQ";
 import Footer from "@/components/HomePage/Footer/Footer";
@@ -10,10 +10,11 @@ import ReadyToShow from "@/components/HomePage/ReadyToShow/ReadyToShow";
 export default function Home() {
   return (
     <>
-      <main className="w-screen max-w-full flex flex-col gap-6 bg-black px-8 py-4">
+      <main className="w-screen max-w-full flex flex-col gap-6 bg-black px-8 pt-[5.5rem]">
         <Navbar />
         <Hero />
         <Description />
+        <Community />
         <GettingStarted />
         <FAQ />
         <ReadyToShow />

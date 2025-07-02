@@ -33,6 +33,7 @@ module.exports = {
         "PublicSans-Thin": ["PublicSans Thin", "sans-serif"],
         "Outfit-Medium": ["Outfit Medium", "sans-serif"],
         "Outfit-Regular": ["Outfit Regular", "sans-serif"],
+        "Outfit-Light": ["Outfit Light", "sans-serif"],
         "Outfit-SemiBold": ["Outfit SemiBold", "sans-serif"],
         "Geist-Light": ["Geist Light", "sans-serif"],
         "Geist-Regular": ["Geist Regular", "sans-serif"],

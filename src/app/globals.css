@@ -111,6 +111,12 @@
   font-style: normal;
 }
 @font-face {
+  font-family: 'Outfit Light';
+  src: url('../Fonts/Outfit-Light.ttf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
     font-family: 'Outfit SemiBold';
     src: url('../Fonts/Outfit-SemiBold.ttf') format('opentype');
     font-weight: 400;
