@@ -6,6 +6,7 @@ import GettingStarted from "@/components/HomePage/GettingStarted/GettingStarted"
 import Hero from "@/components/HomePage/Hero/Hero";
 import Navbar from "@/components/HomePage/Navbar/Navbar";
 import ReadyToShow from "@/components/HomePage/ReadyToShow/ReadyToShow";
+import ScrollingArea from "@/components/HomePage/ScrollingArea/ScrollingArea";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Hero />
         <Description />
         <Community />
+        <ScrollingArea />
         <GettingStarted />
         <FAQ />
         <ReadyToShow />

@@ -7,7 +7,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.user);
 
   return (
-    <div className="fixed top-2 left-0 z-50 w-full flex items-center justify-between text-white px-7">
+    <div className="fixed top-2 left-0 z-50 w-full flex items-center justify-between text-white px-8">
       <div className="flex items-center justify-center gap-2">
         <div className="relative w-6 h-6">
           <Image
