@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProjectCard from "../ProjectCard/ProjectCard";
 import ProjectDetailModal from "../ProjectDetailModal/ProjectDetailModal";
 import { getAllProjects } from "@/utils/api/projectApi";
-import Loader from "../../Loader/Loader";
+import Loader from "../../common/Loader/Loader";
 
 const ProjectsArea = ({ isOpen }) => {
   const [projects, setProjects] = useState([]);

@@ -306,7 +306,7 @@ const Description = () => {
 
       <div className="w-full overflow-x-auto">
         <div className="flex gap-4">
-          {[1, 2, 3, 4, 5].map((item) => (
+          {[1, 2, 3, 4].map((item) => (
             <motion.div
               key={item}
               className="w-[40%] h-[15rem] rounded-3xl overflow-hidden flex-shrink-0 bg-gray-200"

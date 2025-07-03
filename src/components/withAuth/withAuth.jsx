@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import Loader from "../Loader/Loader";
+import Loader from "../common/Loader/Loader";
 
 const withAuth = (Component) => {
   const ProtectedComponent = (props) => {
