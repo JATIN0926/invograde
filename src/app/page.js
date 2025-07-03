@@ -1,3 +1,4 @@
+import CustomCursor from "@/components/common/CustomCursor/CustomCursor";
 import Community from "@/components/HomePage/Community/Community";
 import Description from "@/components/HomePage/Description/Description";
 import FAQ from "@/components/HomePage/FAQ/FAQ";
@@ -11,6 +12,7 @@ import ScrollingArea from "@/components/HomePage/ScrollingArea/ScrollingArea";
 export default function Home() {
   return (
     <>
+      <CustomCursor />
       <main className="w-screen max-w-full flex flex-col gap-6 bg-black px-8 pt-[5.5rem]">
         <Navbar />
         <Hero />
