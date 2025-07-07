@@ -34,6 +34,11 @@ const SignUp = () => {
       toast.error("Please enter a email.");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
     if (!password) {
       toast.error("Please enter a password.");
       return;
@@ -46,7 +51,6 @@ const SignUp = () => {
     let toastId;
 
     try {
-      console.log("formdata", formData);
 
       toastId = toast.loading("Creating your Account..");
 
@@ -72,7 +76,9 @@ const SignUp = () => {
     } catch (err) {
       console.error(err);
       const errorMessage =
-        err?.response?.data?.message || "An error occurred. Please try again.";
+        err?.response?.data?.message ||
+        err?.response?.data?.errors?.[0]?.msg ||
+        "An error occurred. Please try again.";
       toast.error(errorMessage, { id: toastId });
     }
   };
