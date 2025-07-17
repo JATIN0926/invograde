@@ -31,6 +31,11 @@ const ResetPassword = () => {
         return;
       }
 
+      if (password.length < 6) {
+        toast.error("Passwords must contain at least 6 characters!");
+        return;
+      }
+
       if (!email || !token) {
         toast.error("Reset link is invalid or expired.");
         return;
