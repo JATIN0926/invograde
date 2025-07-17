@@ -53,13 +53,13 @@ const Login = () => {
       } else {
         toast.error(response.data.message || "Login failed", { id: loading });
       }
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch (err) {
+      console.error("Login error:", err);
       const errorMessage =
         err?.response?.data?.message ||
         err?.response?.data?.errors?.[0]?.msg ||
         "An error occurred. Please try again.";
-      toast.error(errorMessage, { id: toastId });
+      toast.error(errorMessage, { id: loading });
     }
   };
 
@@ -162,7 +162,10 @@ const Login = () => {
                   onChange={handleChange}
                   className="border border-[#E3E3E3] rounded-lg w-full"
                 />
-                <h3 className=" font-Outfit-Medium text-[0.8rem] tracking-[0.2px]">
+                <h3
+                  onClick={() => router.push("/forgot-password")}
+                  className=" font-Outfit-Medium text-[0.8rem] tracking-[0.2px] cursor-pointer hover:underline"
+                >
                   Forgot Password?
                 </h3>
               </div>
